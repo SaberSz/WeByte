@@ -1,43 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>WeByte Login</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-</head>
-<body style="background-color:#212121" data-spy="scroll" data-target=".navbar" data-offset="50">
-
-
-  <div style="background:#212121 !important" class="jumbotron jumbotron-fluid">
-    <!-- https://www.w3schools.com/bootstrap4/bootstrap_jumbotron.asp -->
-
-
-    <!-- https://www.w3schools.com/bootstrap4/bootstrap_navbar.asp -->
-    <nav style="background-color:#0D47A1" class="navbar navbar-expand-sm  navbar-dark fixed-top">
-        <!-- bg-primary -->
-        <a class="navbar-brand" href="#"><font color="white" style="font-family:DejaVu Sans Mono, monospace; font-size: 25px !important">WeByte</font></a>
-        <ul class="navbar-nav justify-content-center">
-            <!--      Right-aligned nav
-            <ul class="nav justify-content-end"> -->
-            <li class="nav-item">
-            <a class="nav-link disabled" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link disabled" href="#">About Us</a>
-             </li>
-             <li class="nav-item">
-            <a class="nav-link" href="#logins">Login</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('create') }}">Create Account</a>
-            </li>
-    </ul>
-    </nav>
-
+{% extends "layout1.html" %}
+{% block nonuser %}
 <div id="logins" class="container center_div">
     <br>
     <br>
@@ -68,13 +30,17 @@
 
 </center>
 </div>
- </div>
- <div>
-      {% if error %}
-      <center>
-      <h3 class="display-6"><font color="red" style="font-family:DejaVu Sans Mono, monospace;"><strong>Error:</strong> {{ error }}</font></h3>
-      </center>
-  {% endif %}
-    </div>
-</body>
-</html>
+  {% with messages = get_flashed_messages() %}
+   {% if messages %}
+<div class="alert alert-danger alert-dismissible fade show">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+      {% for message in messages %}
+      <font style="font-family:DejaVu Sans Mono, monospace;"> {{ message }}</font>
+      {% endfor %}
+
+<!-- <a href="https://www.w3schools.com/bootstrap4/bootstrap_alerts.asp" class="alert-link">read this message</a> -->
+</div>
+ {% endif %}
+{% endwith %}
+{%  endblock nonuser %}
