@@ -1,5 +1,7 @@
 {% extends "layout1.html" %}
 {% block nonuser %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div id="logins" class="container center_div zoomIn animated">
     <br>
     <br>
@@ -27,8 +29,23 @@
       </div>
     </div>
   </form>
+<div class="gitt bounce animated">
+      <div class="col-sm-offset-2 col-sm-10">
+     <a href="https://github.com/SaberSz/WeByte">
+                <span class="fa-stack fa-lg">
+                 <h4><i class="fa fa-circle fa-stack-2x"></i></h4>
+                  <h4><i class="fa fa-github fa-stack-1x fa-inverse"></i></h4>
 
+                </span>
+              </a>
+</div>
 </center>
+ <center>
+   <div class="col-sm-offset-10 col-sm-10">
+<h4 style="DejaVu Sans Mono, monospace;"><font color="white">Wish to have a look at our source code?Don't worry we've got you covered.Follow us on Git.</font></h4>
+</div>
+ <center>
+
 </div>
   {% with messages = get_flashed_messages() %}
    {% if messages %}
