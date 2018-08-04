@@ -3,11 +3,24 @@ app = Flask(__name__)
 app.secret_key = b'some_secret'
 
 
-@app.route('/')
 @app.route('/login')
 def login1():
     error = ""
     return render_template("login.html")
+
+
+@app.route('/')
+@app.route('/home')
+def indexs():
+    error = ""
+    return render_template("index.html")
+
+
+# @app.route('/home', methods=['POST'])
+# def indexs1():
+#     error = ""
+#     if request.method == "POST":
+#         return render_template("login.html")
 
 
 @app.route("/login", methods=['POST'])
@@ -27,6 +40,25 @@ def login2():
             error = "Invalid username or password"
             flash(error)
             return render_template("login.html", title="Login", error=error)
+
+
+@app.route("/contact", methods=['POST'])
+def con():
+    error = "error"
+    if request.method == "POST":
+        u = request.form['name']
+        e = request.form['email']
+        m = request.form['message']
+        s = request.form['subject']
+        print(f'{u} and {e} and {m} and {s} ')
+        return render_template("contact.html", title="Login")
+    else:
+        return render_template("contact.html", title="Login", error=error)
+
+
+@app.route("/contact")
+def con1():
+    return render_template("contact.html",)
 
 
 @app.route('/prog')
