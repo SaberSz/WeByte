@@ -1,51 +1,71 @@
-{% extends "layout1.html"%}
-{% block nonuser %}
-<div id="creates" class="container center_div flip animated">
-    <br>
-    <br>
-    <center>
-      <h2 class="display-3"><font color="white" style="font-family:DejaVu Sans Mono, monospace;">Sign Up</font></h2>
-       <p><font color="white" style="font-family:DejaVu Sans Mono, monospace;">Please fill this form to create an account.</font></p>
-    <hr style="border: 0.5px solid #ffffff">
-    <br>
-    <br>
-    <form class="form-horizontal" action="/action_page.php">
-    <div  class="form-group">
-      <!-- <label class="control-label col-sm-2" for="eusn">Username:</label> -->
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="eusn" placeholder="Enter University Seat Number" name="eusn" required>
-      </div>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,600">
+    <link rel="stylesheet" href="assets/css/AXY-Contact-Us.css">
+    <link rel="stylesheet" href="assets/css/AXY-Contact-Us1.css">
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/copyright-sss.css">
+    <link rel="stylesheet" href="assets/css/copyright-sss1.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/Projects-Clean.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/Team-Boxed.css">
+</head>
+
+<body>
+    <div class="login-dark" style="background-image:url(&quot;assets/img/stars-3840x2160-galaxy-4k-6362.jpg&quot;);background-size:cover;background-repeat:no-repeat;width:100%;">
+        <form method="post" style="background-color:rgba(33,33,33,0.77);">
+            <h2 class="sr-only">Login Form</h2>
+            <div data-aos="zoom-in" data-aos-duration="700" data-aos-once="true" class="illustration"><i class="material-icons" style="color:#2980ef;font-size:120px;">account_circle</i></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" required="" placeholder="Email" autofocus="" inputmode="email" style="font-family:Montserrat, sans-serif;"><small class="form-text text-danger">Account exists.</small></div>
+            <div class="form-group"><input class="form-control" type="text" name="usname" required="" placeholder="Username" style="font-family:Montserrat, sans-serif;"><small class="form-text text-danger">Invalid Username.</small></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" required="" placeholder="Password" style="font-family:Montserrat, sans-serif;"></div>
+            <div class="form-group"><input class="form-control" type="password" name="repassword" required="" placeholder="Re-enter Password" style="font-family:Montserrat, sans-serif;"><small class="form-text text-danger">Passwords don't match.</small></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="font-family:Montserrat, sans-serif;">Sign Up</button></div><a class="text-success forgot" href="#" style="font-family:Montserrat, sans-serif;">Privacy Terms and Policies.</a></form>
+        <nav
+            class="navbar navbar-light navbar-expand-md" style="background-color:transparent;padding:6px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;background-size:cover;">
+            <div class="container-fluid"><a class="navbar-brand" href="index.html" data-aos="fade-down" data-aos-duration="700" style="color:rgba(255,255,255,0.9);background-image:url(&quot;assets/img/logo_transparent.png&quot;);background-position:100%;background-repeat:no-repeat;background-size:cover;height:25vh;"></a>
+                <button
+                    class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1" style="color:rgb(255,255,255);background-color:transparent;"><span class="sr-only" style="background-color:#ffffff;">Toggle navigation</span><span class="navbar-toggler-icon" style="color:rgb(255,255,255);background-color:rgba(255,255,255,0.44);"></span></button>
+                    <div class="collapse navbar-collapse"
+                        data-aos="fade-up" data-aos-duration="700" data-aos-once="true" id="navcol-1">
+                        <ul class="nav navbar-nav mx-auto" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="#video-and-stats" style="color:rgba(255,255,255,0.5);">Code?</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="index.html#contactus" style="color:rgba(255,255,255,0.5);">Contact Us</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="login.html" style="color:rgba(255,255,255,0.5);">Sign In</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="create.html" style="color:rgba(255,255,255,0.5);">Sign Up</a></li>
+                        </ul>
+                    </div>
+            </div>
+            </nav>
     </div>
-    <div  class="form-group">
-    <div class="col-sm-4">
-        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
-      </div>
-       </div>
-    <div class="form-group">
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="eun" placeholder="Enter username" name="eun" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <!-- <label class="control-label col-sm-2" for="pwd">Password:</label> -->
-      <div class="col-sm-4">
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <!-- <label class="control-label col-sm-2" for="pwd">Password:</label> -->
-      <div class="col-sm-4">
-        <input type="password" class="form-control" id="pwd1" placeholder="Renter password" name="pwd1" required>
-      </div>
-    </div>
-    <br>
-    <p><font color="white" style="font-family:DejaVu Sans Mono, monospace;">By creating an account you agree to our <a href="https://policies.google.com/" style="color:dodgerblue">Terms & Privacy</a>.</font></p>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-outline-primary">Sign Up</button>
-      </div>
-    </div>
-  </form>
-</center>
-</div>
-{%  endblock nonuser %}
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/bs-animation.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+</body>
+
+</html>

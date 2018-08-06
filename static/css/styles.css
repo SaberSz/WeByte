@@ -1,7 +1,10 @@
 body {
-  background-color:#000000;
+  background-color:#212121;
   color:rgb(255,255,255);
   font-family:DejaVu Sans Mono, monospace;
+  /*background-image:url("../../assets/img/stars-3840x2160-galaxy-4k-6362.jpg");*/
+  background-size:cover;
+  background-repeat:no-repeat;
 }
 
 #navcol-1 {

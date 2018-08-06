@@ -5,33 +5,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,600">
-    <link rel="stylesheet" href="static/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/AXY-Contact-Us.css">
+    <link rel="stylesheet" href="assets/css/AXY-Contact-Us1.css">
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/copyright-sss.css">
+    <link rel="stylesheet" href="assets/css/copyright-sss1.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/Projects-Clean.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/Team-Boxed.css">
 </head>
 
-<body>
-    <section class="d-flex flex-column justify-content-between" data-bs-parallax-bg="true" id="home1" style="width:100%;height:100vh;background-image:url(&quot;static/img/wall4.png&quot;);background-position:center;background-size:cover;background-repeat:no-repeat;">
+<body style="background-color:rgb(0,0,0);">
+    <section class="d-flex flex-column justify-content-between" data-bs-parallax-bg="true" id="home1" style="width:100%;height:100vh;background-image:url(&quot;assets/img/wall4.png&quot;);background-position:center;background-size:cover;background-repeat:no-repeat;">
         <div id="hometop">
             <nav class="navbar navbar-light navbar-expand-md" style="background-color:transparent;padding:6px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;background-size:cover;">
-                <div class="container-fluid"><a class="navbar-brand" href="#" data-aos="fade-down" data-aos-duration="700" style="color:rgba(255,255,255,0.9);background-image:url(&quot;static/img/logo_transparent.png&quot;);background-position:100%;background-repeat:no-repeat;background-size:cover;height:25vh;"></a>
+                <div class="container-fluid"><a class="navbar-brand" href="index.html" data-aos="fade-down" data-aos-duration="700" style="color:rgba(255,255,255,0.9);background-image:url(&quot;assets/img/logo_transparent.png&quot;);background-position:100%;background-repeat:no-repeat;background-size:cover;height:25vh;"></a>
                     <button
                         class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1" style="color:rgb(255,255,255);background-color:transparent;"><span class="sr-only" style="background-color:#ffffff;">Toggle navigation</span><span class="navbar-toggler-icon" style="color:rgb(255,255,255);background-color:rgba(255,255,255,0.44);"></span></button>
                         <div class="collapse navbar-collapse"
                             data-aos="fade-up" data-aos-duration="700" data-aos-once="true" id="navcol-1">
                             <ul class="nav navbar-nav mx-auto" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
                                 <li class="nav-item" role="presentation"><a class="nav-link" href="#video-and-stats" style="color:rgba(255,255,255,0.5);">Code?</a></li>
+                                <li class="nav-item" role="presentation"><a class="nav-link" href="#contactus" style="color:rgba(255,255,255,0.5);">Contact Us</a></li>
                                 <li class="nav-item" role="presentation"><a class="nav-link" href="#aboutus" style="color:rgba(255,255,255,0.5);">ABout Us</a></li>
                             </ul>
                             <ul class="nav navbar-nav" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
-                                <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('login1') }}" style="color:rgba(255,255,255,0.5);">Sign In</a></li>
-                                <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('create') }}" style="color:rgba(255,255,255,0.5);">Sign Up</a></li>
+                                <li class="nav-item" role="presentation"><a class="nav-link" href="login.html" style="color:rgba(255,255,255,0.5);">Sign In</a></li>
+                                <li class="nav-item" role="presentation"><a class="nav-link" href="create.html" style="color:rgba(255,255,255,0.5);">Sign Up</a></li>
                             </ul>
                         </div>
                 </div>
@@ -47,7 +62,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col d-flex justify-content-center align-items-center align-content-center align-self-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150" data-aos-once="true" style="margin-right:0px;margin-left:0px;"><button class="btn btn-danger active btn-lg reserve-button" type="button" onClick="location.href='login'"  data-bs-hover-animate="flash" style="background-color:rgba(255,0,0,0.32);width:auto;font-size:22px;margin-top:10px;">Enter the Arena</button></div>
+                    <div class="col d-flex justify-content-center align-items-center align-content-center align-self-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="150" data-aos-once="true" style="margin-right:0px;margin-left:0px;"><button class="btn btn-danger active btn-lg reserve-button" type="button" data-bs-hover-animate="flash" style="background-color:rgba(255,0,0,0.32);width:auto;font-size:22px;margin-top:10px;">Enter the Arena</button></div>
                 </div>
             </div>
         </div>
@@ -114,6 +129,100 @@
             <p data-aos="fade-up" data-aos-duration="700" data-aos-delay="950" id="stats-para" style="font-size:46px;font-weight:500;font-style:normal;color:#79c0ff;">Tell us which one do you love?</p>
             <hr>
     </section>
+    <div class="team-boxed" style="background-color:rgb(0,0,0);">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center" style="color:rgb(255,255,255);">Our Team</h2>
+            </div>
+            <div class="row people">
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box" style="background-color:#212121;"><img class="rounded-circle" src="assets/img/1 (1).jpg">
+                        <h3 class="name" style="font-family:Montserrat, sans-serif;color:#ffffff;">Abhishek Varma</h3>
+                        <p class="title">the 1st musketeer</p>
+                        <p class="description" style="font-family:Montserrat, sans-serif;"><br>The other day i was reminiscing about the time when i was completely engrossed and was having a hardtime trying to figure out ways to implement a computer bot capable of playing ping pong, that's when iacquainted myself with
+                            machine learning. That's when i knew that this is what i want to do in life!<br><br></p>
+                        <div class="social"><a href="#"><i class="fa fa-github" style="font-size:35px;"></i></a><a href="#"><i class="fa fa-linkedin-square" style="font-size:35px;"></i></a><a href="#"><i class="fa fa-link" style="font-size:35px;"></i></a></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box" style="background-color:#212121;"><img class="rounded-circle" src="assets/img/0.jpg">
+                        <h3 class="name" style="font-family:Montserrat, sans-serif;color:#ffffff;">Dylan Saldanha</h3>
+                        <p class="title">The 2nd musketeer</p>
+                        <p class="description" style="font-family:Montserrat, sans-serif;padding-bottom:43px;"><br>A Deep Learning Enthusiast in the final year of his Bachelor's of Computer Engineering degree at Visvesvaraya Technological University who is deeply passionate about problem-solving, programming and current technologies.<br><br></p>
+                        <div
+                            class="social"><a href="#"><i class="fa fa-github" style="font-size:35px;"></i></a><a href="#"><i class="fa fa-linkedin-square" style="font-size:35px;"></i></a><a href="#"><i class="fa fa-stack-overflow" style="font-size:35px;"></i></a></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 item">
+                <div class="box" style="background-color:#212121;"><img class="rounded-circle" src="assets/img/QA.jpg" style="margin-top:24px;">
+                    <h3 class="name" style="font-family:Montserrat, sans-serif;">It Could Be You</h3>
+                    <p class="title">The 3rd&nbsp;musketeer</p>
+                    <p class="description" style="font-family:Montserrat, sans-serif;padding-bottom:198px;">Fork our Repository and be one of the contributors.......</p>
+                    <div class="social"><a href="#"><i class="fa fa-github" style="font-size:35px;margin:0 auto;"></i></a><a href="#"></a><a href="#"></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div><div id ="contactus" class="jumbotron-contact jumbotron-contact-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <h1 class="h1">
+                    Contact us <small>Feel free to contact us</small></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Name</label>
+                            <input type="text" class="form-control" id="name" name="conname" placeholder="Enter name" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email" >
+                                Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                <input type="email" class="form-control" id="email" name="conmail" placeholder="Enter email" required="required" /></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">
+                                Subject</label>
+                            <select id="subject" name="subject" class="form-control" name="consel" required="required">
+                                <option value="service">General Issue</option>
+                                <option value="suggestions">Suggestions</option>
+                                <option value="product">Say Hi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label for="name">
+                                Message</label>
+                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                            Send Message</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+</div></div>
     <div data-aos="fade-up" data-aos-duration="950" id="aboutus" class="footer-dark" style="background-color:rgb(0,0,0);font-family:Montserrat, sans-serif;">
         <footer>
             <div class="container">
@@ -141,39 +250,16 @@
                             story is that of the people who run it. From the two college friends who willed an idea to reality, to the people who put their faith into the aim of the startup and took it as their own, WeByte is many stories, of the people
                             who make it. Our story is continually changing, as the people at WeByte keep writing new ones, everyday.<br><br></p>
                     </div>
-                    <div class="col item social">
-                        <div class="row">
-                            <div class="col">
-                                <h3>Our Team</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <h3>Abhishek Varma</h3>
-                                <div class="row">
-                                    <div class="col"><a href="https://github.com/abhishekvarma16" target="_blank" style="font-size:32px;"><i class="icon ion-social-github" style="padding:20px;"></i></a><a href="#" target="_blank" style="font-size:32px;"><i class="icon ion-social-linkedin" style="padding:20px;"></i></a>
-                                        <a
-                                            href="#" style="font-size:32px;"><i class="icon ion-social-facebook" style="padding:20px;"></i></a><a href="#" style="font-size:32px;"><i class="icon ion-social-instagram" style="padding:20px;"></i></a></div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <h3>Dylan Saldanha</h3>
-                                <div class="row">
-                                    <div class="col"><a href="https://github.com/SaberSz" target="_blank" style="font-size:32px;"><i class="icon ion-social-github" style="padding:20px;"></i></a><a href="#" target="_blank" style="font-size:32px;"><i class="icon ion-social-linkedin" style="padding:20px;"></i></a>
-                                        <a
-                                            href="#" style="font-size:32px;"><i class="icon ion-social-facebook" style="padding:20px;"></i></a><a href="#" style="font-size:32px;"><i class="icon ion-social-instagram" style="padding:20px;"></i></a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <p class="copyright">WeByte © 2018</p>
+                <p class="copyright" style="background-color:rgb(0,0,0);">WeByte © 2018</p>
             </div>
         </footer>
     </div>
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/bs-animation.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/bs-animation.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
 </body>
