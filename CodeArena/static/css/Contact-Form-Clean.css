@@ -1,0 +1,228 @@
+.contact-clean {
+  background:#f1f7fc;
+  padding:80px 0;
+}
+
+@media (max-width:767px) {
+  .contact-clean {
+    padding:20px 0;
+  }
+}
+
+.contact-clean form {
+  max-width:480px;
+  width:90%;
+  margin:0 auto;
+  background-color:#ffffff;
+  padding:40px;
+  border-radius:4px;
+  color:#505e6c;
+  box-shadow:1px 1px 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width:767px) {
+  .contact-clean form {
+    padding:30px;
+  }
+}
+
+.contact-clean h2 {
+  margin-top:5px;
+  font-weight:bold;
+  font-size:28px;
+  margin-bottom:36px;
+  color:inherit;
+}
+
+.contact-clean .form-group:last-child {
+  margin-bottom:5px;
+}
+
+.contact-clean form .form-control {
+  background:#fff;
+  border-radius:2px;
+  box-shadow:1px 1px 1px rgba(0,0,0,0.05);
+  outline:none;
+  color:inherit;
+  padding-left:12px;
+  height:42px;
+}
+
+.contact-clean form .form-control:focus {
+}
+
+.contact-clean form textarea.form-control {
+  min-height:100px;
+  max-height:260px;
+  padding-top:10px;
+  resize:vertical;
+}
+
+.contact-clean form .btn {
+  padding:16px 32px;
+  border:none;
+  background:none;
+  box-shadow:none;
+  text-shadow:none;
+  opacity:0.9;
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:13px;
+  letter-spacing:0.4px;
+  line-height:1;
+  outline:none !important;
+}
+
+.contact-clean form .btn:hover {
+  opacity:1;
+}
+
+.contact-clean form .btn:active {
+  transform:translateY(1px);
+}
+
+.contact-clean form .btn-primary {
+  background-color:#055ada !important;
+  margin-top:15px;
+  color:#fff;
+}
+
+#input-in-problems {
+  border-right:1px solid #fff;
+}
+
+.textarea-in-problems {
+  padding:40px;
+  background-color:#19191a;
+}
+
+.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-append > .btn, .input-group-lg > .input-group-append > .input-group-text, .input-group-lg > .input-group-prepend > .btn, .input-group-lg > .input-group-prepend > .input-group-text {
+}
+
+#probswritten:focus {
+  background-color:#212121;
+  color:#fff;
+}
+
+.form-control-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-append > .btn, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-prepend > .input-group-text {
+}
+
+#plains-in-forms {
+  border:0px;
+}
+
+#times-comp {
+  margin-left:20%;
+}
+
+@media (min-width: 1200px) {
+  #times-comp {
+    margin-left:400px;
+  }
+}
+
+tabsinres {
+  border:0px;
+  font-family:'Montserrat';
+  font-size:16px;
+}
+
+.restops {
+  color:#fdb600;
+  /*background-color:#fdb600;*/
+}
+
+.restops2 {
+  color:#909090;
+}
+
+.restops3 {
+  color:#b26001;
+}
+
+.resnormal {
+  color:#fff;
+}
+
+.resme {
+  color:#00ff38;
+}
+
+.reshead {
+  border-top:0px;
+}
+
+.reshead {
+  border-top:0px;
+}
+
+#userface {
+  margin:0 auto;
+  margin-left:50px;
+}
+
+#infos {
+  width:600px;
+  height:600px;
+}
+
+#head {
+}
+
+#userinfo {
+  width:600px;
+  margin:0 auto;
+}
+
+#headd {
+  text-align:left;
+}
+
+#userinfo {
+}
+
+#userinfo.cell-right {
+  text-align:right;
+  font-weight:bold;
+}
+
+.userface-tab {
+  display:inline-block;
+  width:100%;
+}
+
+.row.with-userface {
+  text-align:center;
+}
+
+.form-control.pass-acc {
+  border:none;
+  border-bottom:1px solid #ffffff;
+  background-color:transparent;
+  border-radius:0px;
+  padding:10px;
+  width:300px;
+  margin:0 auto;
+}
+
+.form-acc {
+  width:400px;
+  background-color:rgba(33,33,33,0.41);
+  padding:20px;
+}
+
+.container.form-cons {
+  margin:0 auto;
+  text-align:center;
+}
+
+.div-form-acc {
+  margin:0 auto;
+}
+
+.btn.btn-primary.btn-block.btn-acc {
+  width:170px;
+  margin:0 auto;
+  padding:10px;
+}
+

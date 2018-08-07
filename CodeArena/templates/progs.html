@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="static/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="static/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,600">
+    <link rel="stylesheet" href="static/css/AXY-Contact-Us.css">
+    <link rel="stylesheet" href="static/css/AXY-Contact-Us1.css">
+    <link rel="stylesheet" href="static/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="static/css/copyright-sss.css">
+    <link rel="stylesheet" href="static/css/copyright-sss1.css">
+    <link rel="stylesheet" href="static/css/Data-Table.css">
+    <link rel="stylesheet" href="static/css/Data-Table2.css">
+    <link rel="stylesheet" href="static/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="static/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="static/css/Projects-Clean.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/Team-Boxed.css">
+</head>
+
+<body style="background-color:#212121;">
+    <section>
+        <nav class="navbar navbar-light navbar-expand-md" style="background-color:transparent;padding:6px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;background-size:cover;">
+            <div class="container-fluid"><a class="navbar-brand" href="#" data-aos="fade-down" data-aos-duration="700" style="color:rgba(255,255,255,0.9);background-image:url(&quot;static/img/logo_transparent.png&quot;);background-position:100%;background-repeat:no-repeat;background-size:cover;height:25vh;"></a>
+                <button
+                    class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1" style="color:rgb(255,255,255);background-color:transparent;"><span class="sr-only" style="background-color:#ffffff;">Toggle navigation</span><span class="navbar-toggler-icon" style="color:rgb(255,255,255);background-color:rgba(255,255,255,0.44);"></span></button>
+                    <div class="collapse navbar-collapse"
+                        data-aos="fade-up" data-aos-duration="700" data-aos-once="true" id="navcol-1">
+                        <ul class="nav navbar-nav mx-auto" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('fights') }}" style="color:rgba(255,255,255,0.5);">Battles</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('rs') }}" style="color:rgba(255,255,255,0.5);">results</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('accs') }}" style="color:rgba(255,255,255,0.5);">Account</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="i{{ url_for('indexs') }}" style="color:rgba(255,255,255,0.5);">Sign Out</a></li>
+                        </ul>
+                    </div>
+            </div>
+        </nav>
+    </section>
+    <div class="card" style="background-color:#212121;height:100%;">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist" style="background-color:transparent;">
+                <li class="nav-item"><a class="nav-link active" href="#item-1-1" id="item-1-1-tab" data-toggle="tab" role="tab" aria-controls="item-1-1" aria-selected="true" style="font-family:Montserrat, sans-serif;">First Problem</a></li>
+                <li class="nav-item"><a class="nav-link" href="#item-1-2" id="item-1-2-tab" data-toggle="tab" role="tab" aria-controls="item-1-2" aria-selected="false" style="font-family:Montserrat, sans-serif;">Second Problem</a></li>
+                <li class="nav-item"><a class="nav-link" href="#item-1-3" id="item-1-3-tab" data-toggle="tab" role="tab" aria-controls="item-1-3" aria-selected="false" style="font-family:Montserrat, sans-serif;">Third Problem</a></li>
+                <li class="nav-item"><a class="nav-link" href="#item-1-3" id="item-1-4-tab" data-toggle="tab" role="tab" aria-controls="item-1-4" aria-selected="false" style="font-family:Montserrat, sans-serif;">Fourth Problem</a></li>
+                <li class="nav-item" id="times-comp"><a class="nav-link text-uppercase" href="#" id="item-1-4-tab" data-toggle="tab" role="tab" aria-controls="item-1-4" aria-selected="false" style="font-family:Montserrat, sans-serif;font-weight:400;">Time Left:</a></li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div id="nav-tabContent" class="tab-content">
+                <div id="item-1-1" class="tab-pane fade show active" role="tabpanel" aria-labelledby="item-1-1-tab" style="font-family:Montserrat, sans-serif;">
+                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
+    inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
+<pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
+
+    Given a series of numbers(inputs) and each number(N) on a newline.
+
+OUTPUT :
+
+    For the given input , Output the required ans.
+
+NOTE :
+
+    No. of test cases are unknown.
+
+    Use Faster I/O Techniques.
+
+
+</pre>
+</p>
+                    <div class="row">
+                        <div class="col" id="input-in-problems">
+                            <div><p><strong>Input</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+2
+3 4
+1 2 5
+3 2
+2 5 5
+</pre></div>
+                        </div>
+                        <div class="col">
+                            <div><p><strong>Output</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+3
+0
+</pre></div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <div class="dropdown" style="padding:10px;padding-right:0px;padding-left:0px;"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
+                                <div class="dropdown-menu dropdown-menu-left" role="menu"><a class="dropdown-item" role="presentation" href="#">Python</a><a class="dropdown-item" role="presentation" href="#">Java</a><a class="dropdown-item" role="presentation" href="#">C</a></div>
+                            </div>
+                        </div>
+                        <div class="form-group"><input class="form-control form-control-sm plains" type="text" name="chosen" value="Python" readonly="" id="plains-in-forms" style="background-color:transparent;color:rgb(255,255,255);"></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="20" spellcheck="false" name="enterprog" required="" placeholder="Enter your code here" autofocus="" id="probswritten"></textarea></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="10" spellcheck="false" name="opprog" readonly="" required="" placeholder="Output" id="opprob"></textarea></div>
+                        <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
+                    </form>
+                </div>
+                <div id="item-1-2" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-2-tab" style="font-family:Montserrat, sans-serif;">
+                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
+    inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
+<pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
+
+    Given a series of numbers(inputs) and each number(N) on a newline.
+
+OUTPUT :
+
+    For the given input , Output the required ans.
+
+NOTE :
+
+    No. of test cases are unknown.
+
+    Use Faster I/O Techniques.
+
+
+</pre>
+</p>
+                    <div class="row">
+                        <div class="col" id="input-in-problems">
+                            <div><p><strong>Input</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+2
+3 4
+1 2 5
+3 2
+2 5 5
+</pre></div>
+                        </div>
+                        <div class="col">
+                            <div><p><strong>Output</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+3
+0
+</pre></div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <div class="dropdown" style="padding:10px;padding-right:0px;padding-left:0px;"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
+                                <div class="dropdown-menu dropdown-menu-left" role="menu"><a class="dropdown-item" role="presentation" href="#">Python</a><a class="dropdown-item" role="presentation" href="#">Java</a><a class="dropdown-item" role="presentation" href="#">C</a></div>
+                            </div>
+                        </div>
+                        <div class="form-group"><input class="form-control form-control-sm plains" type="text" name="chosen" value="Python" readonly="" id="plains-in-forms" style="background-color:transparent;color:rgb(255,255,255);"></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="20" spellcheck="false" name="enterprog" required="" placeholder="Enter your code here" autofocus="" id="probswritten"></textarea></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="10" spellcheck="false" name="opprog" readonly="" required="" placeholder="Output" id="opprob"></textarea></div>
+                        <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
+                    </form>
+                </div>
+                <div id="item-1-3" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-3-tab" style="font-family:Montserrat, sans-serif;">
+                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
+    inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
+<pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
+
+    Given a series of numbers(inputs) and each number(N) on a newline.
+
+OUTPUT :
+
+    For the given input , Output the required ans.
+
+NOTE :
+
+    No. of test cases are unknown.
+
+    Use Faster I/O Techniques.
+
+
+</pre>
+</p>
+                    <div class="row">
+                        <div class="col" id="input-in-problems">
+                            <div><p><strong>Input</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+2
+3 4
+1 2 5
+3 2
+2 5 5
+</pre></div>
+                        </div>
+                        <div class="col">
+                            <div><p><strong>Output</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+3
+0
+</pre></div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <div class="dropdown" style="padding:10px;padding-right:0px;padding-left:0px;"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
+                                <div class="dropdown-menu dropdown-menu-left" role="menu"><a class="dropdown-item" role="presentation" href="#">Python</a><a class="dropdown-item" role="presentation" href="#">Java</a><a class="dropdown-item" role="presentation" href="#">C</a></div>
+                            </div>
+                        </div>
+                        <div class="form-group"><input class="form-control form-control-sm plains" type="text" name="chosen" value="Python" readonly="" id="plains-in-forms" style="background-color:transparent;color:rgb(255,255,255);"></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="20" spellcheck="false" name="enterprog" required="" placeholder="Enter your code here" autofocus="" id="probswritten"></textarea></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="10" spellcheck="false" name="opprog" readonly="" required="" placeholder="Output" id="opprob"></textarea></div>
+                        <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
+                    </form>
+                </div>
+                <div id="item-1-4" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-4-tab" style="font-family:Montserrat, sans-serif;">
+                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
+    inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
+<pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
+
+    Given a series of numbers(inputs) and each number(N) on a newline.
+
+OUTPUT :
+
+    For the given input , Output the required ans.
+
+NOTE :
+
+    No. of test cases are unknown.
+
+    Use Faster I/O Techniques.
+
+
+</pre>
+</p>
+                    <div class="row">
+                        <div class="col" id="input-in-problems">
+                            <div><p><strong>Input</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+2
+3 4
+1 2 5
+3 2
+2 5 5
+</pre></div>
+                        </div>
+                        <div class="col">
+                            <div><p><strong>Output</strong></p>
+<pre style="font-family:Montserrat, sans-serif; color: white">
+3
+0
+</pre></div>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <div class="dropdown" style="padding:10px;padding-right:0px;padding-left:0px;"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
+                                <div class="dropdown-menu dropdown-menu-left" role="menu"><a class="dropdown-item" role="presentation" href="#">Python</a><a class="dropdown-item" role="presentation" href="#">Java</a><a class="dropdown-item" role="presentation" href="#">C</a></div>
+                            </div>
+                        </div>
+                        <div class="form-group"><input class="form-control form-control-sm plains" type="text" name="chosen" value="Python" readonly="" id="plains-in-forms" style="background-color:transparent;color:rgb(255,255,255);"></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="20" spellcheck="false" name="enterprog" required="" placeholder="Enter your code here" autofocus="" id="probswritten"></textarea></div>
+                        <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="10" spellcheck="false" name="opprog" readonly="" required="" placeholder="Output" id="opprob"></textarea></div>
+                        <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><section class="copyright">
+    <div class="copyright-inner">
+        <p class="text-center">&#169 2018, All Copy Rights Received. WeByte
+        </p>
+    </div>
+</section>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="static/js/bs-animation.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% if title %}
+    <title>WeByte - {{title}}</title>
+    {%  else   %}
+    <title>Welcome to WeByte</title>
+    {% endif %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="static/css/animate.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color:#212121" data-spy="scroll" data-target=".navbar" data-offset="50">
+    <div style="background:#212121 !important" class="jumbotron jumbotron-fluid">
+        <nav style="background-color:#0D47A1;opacity: 0.8;
+    filter:(opacity=80);" class="navbar navbar-expand-sm  navbar-dark fixed-top transparent">
+        <!-- bg-primary -->
+        <a class="navbar-brand" href="{{ url_for('indexs') }}"><font color="white" style="font-family:DejaVu Sans Mono, monospace; font-size: 25px !important">WeByte</font></a>
+        <ul class="navbar-nav justify-content-end">
+            <!--      Right-aligned nav
+            <ul class="nav justify-content-end"> -->
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('con1') }}">Contact Us</a>
+             </li>
+             <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login1') }}">Login</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('create') }}">Create Account</a>
+            </li>
+    </ul>
+    </nav>
+
+    {%  block nonuser %}{% endblock %}
+
+ </div>
+<!--  <div>
+      {% if error %}
+      <center>
+      <h3 class="display-6"><font color="red" style="font-family:DejaVu Sans Mono, monospace;"><strong>Error:</strong> {{ error }}</font></h3>
+      </center>
+  {% endif %}
+    </div>
+ -->
+ <!--Section: Contact v.2-->
+</body>
+</html>
