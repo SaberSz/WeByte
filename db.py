@@ -34,49 +34,36 @@ class userdbop:
 
     def registration(self, email, usn, pwd):
         try:
-            cur = cnx.cursor()
+            cur = self.cnx.cursor()
             d = []
-            # print("ohhhhdwhfhefhewfh")
-            # pw_hash = bcrypt.generate_password_hash('frgvsfbfsbvrwrvdf').decode('utf-8')
-            # print("hash pass", pw_hash)
-            stmt = f'Select * from `users` where `Email` = {email} and `Password`= {pwd} and `Username`= {usn}'
-            cur.execute(stmt)
-            d = cur.fetchall()
-            if not d:  # if list is empty
-                u = []
-                p = []
-                e = []
-                flu, flp, fle = False, False, False
-                st = f'Select * from `users` where `Username`= {usn}'
-                cur.execute(st)
-                u = cur.fetchall()
-                if u:
-                    flu = True
-                st1 = f'Select * from `users` where `Email`= {email}'
+            u = []
+            p = []
+            e = []
+            flu, flp, fle = False, False, False
+            st = f'Select * from `users` where `Username`= "{usn}"'
+            cur.execute(st)
+            u = cur.fetchall()
+            if u:  # if list empty
+                flu = True
+                st1 = f'Select * from `users` where `Email`= "{email}"'
                 cur.execute(st1)
                 e = cur.fetchall()
                 if e:
                     fle = True
-                st2 = f'Select * from `users` where `Password`= {pwd}'
-                cur.execute(st2)
-                p = cur.fetchall()
-                if p:
-                    flp = True
-                if flu == False and flp == False and fle == False:
-                    stm21t = f'INSERT INTO `users`(`Email`, `Username`, `Password`) VALUES ({email},{usn},{pwd})'
+                if flu == False and fle == False:
+                    z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
+                    stm21t = f'INSERT INTO `users`(`Email`, `Username`, `Password`) VALUES ("{email}","{usn}","{z}")'
                     cur.execute(stm21t)
                     self.cnx.commit()
                     return f'Pass'
                 else:
-                    if(flu):
-                        return f'Username:{usn} already taken'
-                    if(fle):
-                        return f'Email:{email} already taken'
-                    if(flp):
-                        return f'Password:{pwd} already taken'
+                    if flu:
+                        return f'Username'
+                    if fle:
+                        return f'Email'
 
             else:  # list not empty so user has already registered.
-                return f'User {usn} has already registered with Email: {email} and password as {pwd}'
+                return f'Email'
 
         except ms.Error as e:
             print("db error")
@@ -89,7 +76,7 @@ class userdbop:
     def contactus(self, name, email, sub, mess):
         try:
             cur = self.cnx.cursor()
-            stmt = f'INSERT INTO `contactus`(`Name`, `Email`, `Subject`, `Desciption`) VALUES ({name},{email},{sub},{mess})'
+            stmt = f'INSERT INTO `contactus`(`Name`, `Email`, `Subject`, `Desciption`) VALUES ("{name}","{email}","{sub}","{mess}")'
             cur.execute(stmt)
             self.cnx.commit()
         except ms.Error as e:
@@ -122,40 +109,98 @@ class userdbop:
             print(e)
             return None
 
-    def fetchaccountdetailsofuser(self):
+    def fetchaccountdetailsofuser(self, email):
         d = []
+        mx = []
+        dick = {}
         try:
             cur = self.cnx.cursor()
-            stmt = f'SELECT Compid,imgs,cName,Des,Typecmp,duration,Date,horc,Time1,Org FROM `competitions` WHERE 1'
-            cur.execute(stmt)
-            d = cur.fetchall()
-            res = []
-            for i in d:
-                var = dict(zip(('cid', 'pic', 'name', 'des', 'up or on', 'duration', 'dates', 'Type of Comp', 'times', 'org'), i))
-                var['dates'] = str(var['dates'])
-                var['times'] = str(var['times'])
-                res.append(var)
-            # print(res)
-            return res
+            stmt1 = f'SELECT `Username`,`joindate` FROM `users` WHERE `Email`="{email}"'
+
+            cur.execute(stmt1)
+            print("d")
+            d = cur.fetchone()
+
+            dick['name'] = d[0]
+            dick['Join date'] = d[1]
+            stmt2 = f'SELECT count(*) FROM `ranks` r,`users`u WHERE u.`Email`=r.`Email`and r.`Email`="{email}" and r.`Rank`=1'
+            cur.execute(stmt2)
+
+            gold = cur.fetchone()
+            dick['golds'] = gold
+            stmt3 = f'SELECT count(*) FROM `ranks` r,`users`u WHERE u.`Email`=r.`Email`and r.`Email`="{email}" and r.`Rank`=2'
+            cur.execute(stmt3)
+
+            silver = cur.fetchone()
+            dick['silver'] = silver
+            stmt4 = f'SELECT count(*) FROM `ranks` r,`users`u WHERE u.`Email`=r.`Email`and r.`Email`="{email}" and r.`Rank`=3'
+            cur.execute(stmt4)
+
+            bronze = cur.fetchone()
+            dick['bronze'] = bronze
+            stmt5 = f'select r.`Language`,count(r.`Language`) as a FROM `results` r WHERE r.`Email`="{email}" GROUP BY r.`Language`ORDER BY a DESC'
+            cur.execute(stmt5)
+            print("fifth statement")
+            mx = cur.fetchall()
+            maxlange = mx[0][0]
+            dick['programming languages used'] = []
+            for i in mx:
+                dick['programming languages used'].append(i[0])
+            dick['style'] = maxlange
+            stmt6 = f'SELECT COUNT(DISTINCT(`competitionsid`)) FROM `results` WHERE Email="{email}"'
+            cur.execute(stmt6)
+
+            battlesfought = cur.fetchall()
+            dick['battles'] = battlesfought
+            return dick
         except ms.Error as e:
-            print("db error")
+            print(e)
             return None
         except TypeError as e:
             print(e)
             return None
 
 
-user1 = userdbop()
-user1.fetchupcomingbattles()
+# user1 = userdbop()
+# user1.fetchaccountdetailsofuser("abhi")
+#   "name": "apples",-----
+#    "golds": 5,----
+#     "silver": 7,----
+#     "bronze": 9,----
+#     "style": "Python",-----
+#     "programming languages used": "Python",----
+#     "Join date": "2018-08-12",----1
+#     "battles": 15---
+def checkauthenticowner(self, email, pwd):
+    try:
+        cur = self.cnx.cursor()
+        d = []
+        st = f'Select * from `users` where `Email`= "{email}" and `Password`=""'
+        cur.execute(st)
+        d = cur.fetchall()
+        if d:  # if list empty
+            return False
+        else:
+            return True
+    except ms.Error as e:
+        print(e)
+        return None
+    except TypeError as e:
+        print(e)
+        return None
 
-#               self.cnx.commit()
-# "cid": 12323,
-#       "pic": "desk.jpg",
-#       "name": "Infinity Code Wars",
-#       "des": "apples, pineapples, greenapples and  oranges for me. ",
-#       "up or on": "Ongoing",
-#       "duration": "3 hours",
-#       "dates": "12/08/2018",
-#       "Type of Comp": "Hiring",
-#       "times": "14:00"
-# org:
+
+def makepwdupdate(self, email, pwd):
+    try:
+        cur = self.cnx.cursor()
+        z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
+        st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`="{email}"'
+        cur.execute(st)
+        cur.commit()
+        return True
+    except ms.Error as e:
+        print(e)
+        return None
+    except TypeError as e:
+        print(e)
+        return None
