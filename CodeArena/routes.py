@@ -1,5 +1,17 @@
-from flask import redirect, url_for, request, render_template, flash
+from flask import redirect, url_for, request, render_template, flash, session, escape
 from CodeArena import app
+from datetime import timedelta
+
+
+@app.before_request
+def make_session_active():
+    session.modified = True
+
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
 
 
 @app.route('/login')
@@ -10,6 +22,10 @@ def login1():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login2():
+    print(f"\n{session.items()}")
+    if 'username' in session:
+        return redirect(url_for('fights'))
+
     error = ""
     if request.method == "POST":
         em = request.form['email']
@@ -19,12 +35,22 @@ def login2():
             print(f'{em} and {pw}')
             flash(f'Welcome back {em}')
             print(f'{em} and {pw}')
-            return redirect(url_for('fights'))
+            session['username'] = em
+            print(f"\n{session.items()}")
+            next_page = request.args.get('next')
+            return redirect(url_for('fights')) if next_page else redirect(url_for('fights'))
 
         else:
             error = "Error"
             flash(error)
-            return render_template("login.html", title="Login", error=error)
+            return redirect(url_for('login1'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    print(f'{session.items()} present in logout')
+    return redirect(url_for('indexs'))
 
 
 @app.route('/')
@@ -54,17 +80,20 @@ def homesugg():
         # else:
         #     error = "Error"
         #     flash(error)
-        flash(f'{name} and {email} \n {sub} and {msg}')
-        return render_template("index.html")
+        flash(f'Thank you {name} for getting in touch with us. We will get back you shortly.')
+        flash('Scroll')
+        return redirect(url_for('indexs'))
 
 
 @app.route('/acc')
 def accs():
-    error = ""
-    return render_template("acc.html")
+    if 'username' in session:
+        username_session = escape(session['username']).capitalize()
+        return render_template('acc.html', session_user_name=username_session)
+    return redirect(url_for('login1'))
 
 
-@app.route('/acc')
+@app.route('/acc', methods=['GET', 'POST'])
 def accs2():
     error = ""
     if request.method == "POST":
@@ -80,13 +109,57 @@ def accs2():
         else:
             error = "Error"
             flash(error)
-            return render_template("acc.html", title="Login", error=error)
+            return render_template("acc.html", title="Login")
+
+
+upcoming = [
+    {
+        "cid": 12323,
+        "pic": "desk.jpg",
+        "name": "Infinity Code Wars",
+        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "duration": "3 hours",
+        "dates": "12/08/2018",
+        "Number of Problems": 4,
+        "Number of Registed People": 256,
+        "Type of Comp": "Hiring",
+    },
+    {
+        "cid": 12323,
+        "pic": "loft.jpg",
+        "name": "Infinity Code Wars",
+        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "duration": "3 hours",
+        "dates": "12/08/2018",
+        "Number of Problems": 4,
+        "Number of Registed People": 256,
+        "Type of Comp": "Hiring",
+    },
+    {
+        "cid": 12323,
+        "pic": "1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "duration": "3 hours",
+        "dates": "12/08/2018",
+        "Number of Problems": 4,
+        "Number of Registed People": 256,
+        "Type of Comp": "Hiring",
+    },
+]
 
 
 @app.route('/fight')
 def fights():
-    error = ""
-    return render_template("compete.html")
+
+    if 'username' in session:
+
+        em = escape(session['username']).capitalize()
+        print(f'the passed value is {em}')
+        # make call to database and get all upcoming competitions as a list and return the list
+        return render_template('compete.html', session_user_name=em, upcoming=upcoming)
+    else:
+        return redirect(url_for('login1'))
 
 
 @app.route('/signup')
@@ -125,34 +198,39 @@ def cre2():
             flash(f'Password')
             error = "Passwords don't match."
 
-        return render_template("create.html", error=error)
+        return redirect(url_for('cre'))
 
 
 @app.route('/problem')
 def prob():
-    error = ""
-    return render_template("progs.html")
+    if 'username' in session:
+        cid = request.args.get('name')
+        print(f'The value of cid is {cid}')
+        username_session = escape(session['username']).capitalize()
+        return render_template('progs.html', session_user_name=username_session)
+    return redirect(url_for('login1'))
 
 
 @app.route('/results')
 def rs():
-    error = ""
-    return render_template("result.html")
+    if 'username' in session:
+        username_session = escape(session['username']).capitalize()
+        return render_template('result.html', session_user_name=username_session)
+    return redirect(url_for('login1'))
 
 
 @app.route('/restab')
 def rst():
-    error = ""
-    return render_template("resultstab.html")
+    if 'username' in session:
+        username_session = escape(session['username']).capitalize()
+        return render_template('resultstab.html', session_user_name=username_session)
+    return redirect(url_for('login1'))
 
 # @app.route('/home', methods=['POST'])
 # def indexs1():
 #     error = ""
 #     if request.method == "POST":
 #         return render_template("login.html")
-
-
-#
 
 
 # @app.route("/contact", methods=['POST'])
@@ -178,7 +256,6 @@ def rst():
 # def prog():
 
 #     return render_template("prog.html", title="Programs")
-
 
 # @app.route('/create')
 # def create():

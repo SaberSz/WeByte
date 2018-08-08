@@ -45,7 +45,7 @@
                         </ul>
                         <ul class="nav navbar-nav" style="font-size:14px;font-family:Montserrat, sans-serif;font-weight:600;">
                             <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('accs') }}" style="color:rgba(255,255,255,0.5);">Account</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('indexs') }}" style="color:rgba(255,255,255,0.5);">Sign Out</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('logout') }}" style="color:rgba(255,255,255,0.5);">Sign Out</a></li>
                         </ul>
                     </div>
             </div>
@@ -57,11 +57,16 @@
                     keys, when the age of programmers comes crashing down! But it is not this day! This day we fight! By all that you hold dear on this good Earth, I bid you stand, Programmers of Earth!"<br><br></p>
             </div>
             <div class="row projects">
-                <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><a href="{{ url_for('prob') }}" target="_blank"><img class="img-fluid" src="static/img/desk.jpg"></a>
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
+                {% for project in upcoming %}
+                <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><a href="{{ url_for('prob', name=project['cid']) }}" target="_blank"><img class="img-fluid" src="static/img/{{ project['pic']}}"></a>
+                    <h3 class="name">{{project['name']}}</h3>
+                    <p class="description">{{
+                    project['des']+"\n"
+                }}
+                <strong>{{ project["Type of Comp"] }}</strong></p>
                 </div>
-                <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/building.jpg"></a>
+                {% endfor %}
+              <!--   <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/building.jpg"></a>
                     <h3 class="name">Project Name</h3>
                     <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
                 </div>
@@ -80,7 +85,7 @@
                 <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/minibus.jpeg"></a>
                     <h3 class="name">Project Name</h3>
                     <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

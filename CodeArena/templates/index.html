@@ -222,13 +222,26 @@
                {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}
-
-                                <div class="alert alert-success alert-dismissible fade show">
+                            {% if "Scroll" != message %}
+                                <div id="scrollSuccess" class="alert alert-success alert-dismissible fade show">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Success!</strong>{{message}}
 </div>
 
+                            {% endif %}
                         {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                  {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Scroll" in messages %}
+
+                                        <script>
+                                            document.getElementById('scrollSuccess').scrollIntoView();
+                                        </script>
+
+
+                        {% endif %}
                     {% endif %}
                 {% endwith %}
         </div>
