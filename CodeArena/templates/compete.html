@@ -61,9 +61,12 @@
                 <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><a href="{{ url_for('prob', name=project['cid']) }}" target="_blank"><img class="img-fluid" src="static/img/{{ project['pic']}}"></a>
                     <h3 class="name">{{project['name']}}</h3>
                     <p class="description">{{
-                    project['des']+"\n"
+                    project['des']
                 }}
-                <strong>{{ project["Type of Comp"] }}</strong></p>
+                <br>
+                <font size = "20px" color="green"><strong>{{ project["Type of Comp"] }}</strong></font>
+                    <br>
+                <font size = "20px" color="green"><strong>{{ project["Type of Comp"] }}</strong></font></p>
                 </div>
                 {% endfor %}
               <!--   <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/building.jpg"></a>

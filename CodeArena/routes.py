@@ -69,17 +69,7 @@ def homesugg():
         email = request.form['conmail']
         sub = request.form['consel']
         msg = request.form['message']
-        print(f'{name} and {email} \n {sub} and {msg}')
-        # print(f'{em} and {pw}')
-        # if em == "admin" and pw == "admin":
-        #     print(f'{em} and {pw}')
-        #     flash(f'Welcome back {user}')
-        #     print(f'{em} and {pw}')
-        #     return redirect(url_for('compete'))
-
-        # else:
-        #     error = "Error"
-        #     flash(error)
+        # Enter into database amd should return True or False
         flash(f'Thank you {name} for getting in touch with us. We will get back you shortly.')
         flash('Scroll')
         return redirect(url_for('indexs'))
@@ -118,33 +108,36 @@ upcoming = [
         "pic": "desk.jpg",
         "name": "Infinity Code Wars",
         "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "up or on": "Ongoing",
         "duration": "3 hours",
         "dates": "12/08/2018",
         "Number of Problems": 4,
-        "Number of Registed People": 256,
         "Type of Comp": "Hiring",
+        "times": "14:00"
     },
     {
         "cid": 12323,
         "pic": "loft.jpg",
         "name": "Infinity Code Wars",
         "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "up or on": "Ongoing",
         "duration": "3 hours",
         "dates": "12/08/2018",
         "Number of Problems": 4,
-        "Number of Registed People": 256,
         "Type of Comp": "Hiring",
+        "times": "14:00",
     },
     {
         "cid": 12323,
         "pic": "1.jpg",
         "name": "Infinity Code Wars",
         "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "up or on": "Upcoming",
         "duration": "3 hours",
         "dates": "12/08/2018",
         "Number of Problems": 4,
-        "Number of Registed People": 256,
         "Type of Comp": "Hiring",
+        "times": "20:00"
     },
 ]
 
