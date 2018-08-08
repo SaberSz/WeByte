@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 07, 2018 at 05:48 AM
+-- Generation Time: Aug 08, 2018 at 10:02 PM
 -- Server version: 5.6.34-log
--- PHP Version: 7.2.1
+-- PHP Version: 7.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -36,10 +36,21 @@ CREATE TABLE `competitions` (
   `cName` varchar(100) NOT NULL,
   `Typecmp` int(1) NOT NULL DEFAULT '2' COMMENT '0,1,2',
   `Des` varchar(1000) NOT NULL,
-  `imgs` longblob,
+  `imgs` varchar(100) DEFAULT NULL,
   `duration` varchar(20) NOT NULL DEFAULT '3 hours',
-  `Date` date NOT NULL
+  `Date` date NOT NULL,
+  `Time1` time NOT NULL,
+  `horc` int(1) NOT NULL COMMENT '0-h 1-r',
+  `Org` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `competitions`
+--
+
+INSERT INTO `competitions` (`Compid`, `cName`, `Typecmp`, `Des`, `imgs`, `duration`, `Date`, `Time1`, `horc`, `Org`) VALUES
+('1', 'fafafeaf', 2, 'faefafaefaef', 'fae.png', '3 hours', '2018-08-17', '05:00:00', 1, 'Cognizant'),
+('2', 'Jun easy', 2, 'Jun easy biatch.', 'jun.png', '3 hours', '2018-08-30', '05:25:34', 1, 'rebvrwbwbw');
 
 -- --------------------------------------------------------
 
@@ -84,7 +95,8 @@ CREATE TABLE `results` (
   `problemid` int(11) NOT NULL,
   `submission` varchar(10000) NOT NULL,
   `Solved` tinyint(1) NOT NULL DEFAULT '0',
-  `Submettime` date NOT NULL
+  `Submettime` date NOT NULL,
+  `Language` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -97,8 +109,16 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `Email` varchar(60) NOT NULL,
   `Username` varchar(50) NOT NULL,
-  `Password` varchar(60) NOT NULL
+  `Password` varchar(60) NOT NULL,
+  `joindate` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`Email`, `Username`, `Password`, `joindate`) VALUES
+('abhi', 'fwfefq', 'fvrwbvrwrw', '2018-08-09 02:12:02');
 
 --
 -- Indexes for dumped tables
