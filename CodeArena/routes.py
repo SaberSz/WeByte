@@ -75,10 +75,25 @@ def homesugg():
         return redirect(url_for('indexs'))
 
 
+usr_details = {
+    "name": "apples",
+    "email": "apples@gmail.com",
+    "golds": 5,
+    "silver": 7,
+    "bronze": 9,
+    "style": "Python",
+    "programming languages used": "Python",
+    "Join date": "2018-08-12",
+    "battles": 15
+}
+
+
 @app.route('/acc')
 def accs():
     if 'username' in session:
         username_session = escape(session['username']).capitalize()
+        # call a method that returns all the details of the user as a dictionary given the email id
+
         return render_template('acc.html', session_user_name=username_session)
     return redirect(url_for('login1'))
 
@@ -105,39 +120,92 @@ def accs2():
 upcoming = [
     {
         "cid": 12323,
-        "pic": "desk.jpg",
+        "pic": "sample-1.jpg",
         "name": "Infinity Code Wars",
-        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
         "up or on": "Ongoing",
         "duration": "3 hours",
-        "dates": "12/08/2018",
+        "dates": "2018-08-12",
         "Number of Problems": 4,
         "Type of Comp": "Hiring",
-        "times": "14:00"
+        "times": "20:00:00",
+        "org": "Cognizant"
     },
     {
         "cid": 12323,
         "pic": "loft.jpg",
         "name": "Infinity Code Wars",
-        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
         "up or on": "Ongoing",
         "duration": "3 hours",
-        "dates": "12/08/2018",
+        "dates": "2018-08-12",
         "Number of Problems": 4,
         "Type of Comp": "Hiring",
-        "times": "14:00",
+        "times": "20:00:00",
+        "org": "Cognizant"
     },
     {
         "cid": 12323,
-        "pic": "1.jpg",
+        "pic": "building.jpg",
         "name": "Infinity Code Wars",
-        "des": "apples, pineapples, greenapples and  oranges for me. ",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
         "up or on": "Upcoming",
         "duration": "3 hours",
-        "dates": "12/08/2018",
+        "dates": "2018-08-12",
+        "Number of Problems": 4,
+        "Type of Comp": "Competitive",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+    {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "up or on": "Upcoming",
+        "duration": "3 hours",
+        "dates": "2018-08-12",
         "Number of Problems": 4,
         "Type of Comp": "Hiring",
-        "times": "20:00"
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+    {
+        "cid": 12323,
+        "pic": "building.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "up or on": "Upcoming",
+        "duration": "3 hours",
+        "dates": "2018-08-12",
+        "Number of Problems": 4,
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    }, {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "up or on": "Upcoming",
+        "duration": "3 hours",
+        "dates": "2018-08-12",
+        "Number of Problems": 4,
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    }, {
+        "cid": 12323,
+        "pic": "building.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "up or on": "Upcoming",
+        "duration": "3 hours",
+        "dates": "2018-08-12",
+        "Number of Problems": 4,
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
     },
 ]
 
@@ -150,7 +218,9 @@ def fights():
         em = escape(session['username']).capitalize()
         print(f'the passed value is {em}')
         # make call to database and get all upcoming competitions as a list and return the list
-        return render_template('compete.html', session_user_name=em, upcoming=upcoming)
+        return render_template('compete.html',
+                               session_user_name=em,
+                               upcoming=upcoming)
     else:
         return redirect(url_for('login1'))
 
@@ -200,15 +270,63 @@ def prob():
         cid = request.args.get('name')
         print(f'The value of cid is {cid}')
         username_session = escape(session['username']).capitalize()
-        return render_template('progs.html', session_user_name=username_session)
+
+        return render_template('progs.html',
+                               session_user_name=username_session)
     return redirect(url_for('login1'))
+
+
+resultant = [
+    {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "dates": "2018-08-12",
+        "Type of Comp": "Competitive",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+    {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "dates": "2018-08-12",
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+    {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "dates": "2018-08-12",
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+    {
+        "cid": 12323,
+        "pic": "sample-1.jpg",
+        "name": "Infinity Code Wars",
+        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "dates": "2018-08-12",
+        "Type of Comp": "Hiring",
+        "times": "20:00:00",
+        "org": "Cognizant"
+    },
+]
 
 
 @app.route('/results')
 def rs():
     if 'username' in session:
         username_session = escape(session['username']).capitalize()
-        return render_template('result.html', session_user_name=username_session)
+        return render_template('result.html',
+                               session_user_name=username_session,
+                               resultant=resultant)
     return redirect(url_for('login1'))
 
 

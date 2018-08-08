@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="static/css/Projects-Clean.css">
     <link rel="stylesheet" href="static/css/styles.css">
     <link rel="stylesheet" href="static/css/Team-Boxed.css">
+    <link rel="stylesheet" href="static/css/Team-with-rotating-cards.css">
 </head>
 
 <body style="background-color:rgb(33,33,33);">
@@ -56,40 +57,109 @@
                 <p class="text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100"><br>"I see in your eyes the same fear that would take the heart of me. A day may come when the courage of programmers fails, when we forsake our code and break all bonds with the compiler, but it is not this day. An hour of noobs and shattered
                     keys, when the age of programmers comes crashing down! But it is not this day! This day we fight! By all that you hold dear on this good Earth, I bid you stand, Programmers of Earth!"<br><br></p>
             </div>
-            <div class="row projects">
+<div class="row">
+                <div class="col">
+                    <section class="card-section-imagia" style="background-color:#212121;">
+                        <div class="row">
+                            {% for project in upcoming %}
+                                 {% if project["up or on"] == "Upcoming" %}
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card-container-imagia" style="font-family:Montserrat, sans-serif;">
+                                    <div class="card-imagia">
+                                        <div  class="front-imagia">
+                                            <div class="cover-imagia" style="height:172px;"><img src="static/img/{{ project['pic']}}" alt=""></div>
+                                            <div class="content-imagia" style="font-family:Montserrat, sans-serif;">
+                                                <h3 class="name-imagia" style="font-size:28px;">{{project['name']}}</h3>
+                                                <p class="subtitle-imagia" style="margin-bottom:8px;">by {{project['org']}}</p>
+                                                <p class="text-center" style="font-size:22px;margin-bottom:5px;"> <font  color="red"><strong>{{ project["Type of Comp"] +"   "}}</strong></font></p>
+                                                <p class="text-center" style="font-size:22px;margin-bottom:5px;"><font  color="green"><strong>{{ project["up or on"] }}</strong></font></p>
+                                                <p class="text-center" style="font-size:16px;">On {{project['dates']}} at  {{project['times']}}</p>
+                                            </div>
+                                            <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                                        </div>
+                                        <div class="back-imagia">
+                                            <div class="content-imagia content-back-imagia">
+                                                <div>
+                                                    <h3 class="text-center">{{project['name']}}</h3>
+                                                    <p class="text-center">{{project['des']}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="footer-imagia">
+                                                <div class="social-imagia text-center"><i class="fa fa-code" style="font-size:40px;"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                               <div class="col-sm-6 col-md-4">
+                                <div class="card-container-imagia" style="font-family:Montserrat, sans-serif;">
+                                    <div class="card-imagia">
+                                        <div  class="front-imagia">
+                                            <div class="cover-imagia" style="height:172px;"><img src="static/img/{{ project['pic']}}" alt=""></div>
+                                            <div class="content-imagia" style="font-family:Montserrat, sans-serif;">
+                                                <h3 class="name-imagia" style="font-size:28px;">{{project['name']}}</h3>
+                                                <p class="subtitle-imagia" style="margin-bottom:8px;">by {{project['org']}}</p>
+                                                <p class="text-center" style="font-size:22px;margin-bottom:5px;"> <font  color="red"><strong>{{ project["Type of Comp"] +"   "}}</strong></font></p>
+                                                <p class="text-center" style="font-size:22px;margin-bottom:5px;"><font  color="green"><strong>{{ project["up or on"] }}</strong></font></p>
+                                                <p class="text-center" style="font-size:16px;">Started on {{project['dates']}} at  {{project['times']}} and will go on for
+                                                {{project['duration']}}. </p>
+                                            </div>
+                                            <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                                        </div>
+                                        <div class="back-imagia">
+                                            <div class="content-imagia content-back-imagia">
+                                                <div>
+                                                    <h3 class="text-center">{{project['name']}}</h3>
+                                                    <p class="text-center">{{project['des']}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="footer-imagia">
+                                                <div class="social-imagia text-center"><a href="{{ url_for('prob', name=project['cid']) }}" target="_blank"><i class="fa fa-code" style="font-size:40px;"></i></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             {% endif %}
+                              {% endfor %}
+                        </div>
+                    </section>
+            <!-- <div class="row projects">
                 {% for project in upcoming %}
-                <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><a href="{{ url_for('prob', name=project['cid']) }}" target="_blank"><img class="img-fluid" src="static/img/{{ project['pic']}}"></a>
+                    {% if project["up or on"] == "Upcoming" %}
+                        <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><img class="img-fluid" src="static/img/{{ project['pic']}}">
                     <h3 class="name">{{project['name']}}</h3>
-                    <p class="description">{{
+                    <p class="description">
+                        <pre>- {{project['org']}}</pre>
+                        {{project['des']}}
+                <br>
+                <strong>Date</strong> : {{project['dates'] +"   "}}
+                <strong>Time</strong> : {{project['times']}}
+                <br>
+                <font size = "5" color="red"><strong>{{ project["Type of Comp"] +"   "}}</strong></font>
+                <font size = "5" color="green"><strong>{{ project["up or on"] }}</strong></font></p>
+                </div>
+                    {% else %}
+                         <div class="col-sm-6 col-lg-4 item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" data-aos-once="true"><a href="{{ url_for('prob', name=project['cid']) }}" target="_blank"><img class="img-fluid" src="static/img/{{ project['pic']}}"></a>
+                    <h3 class="name">{{project['name']}}</h3>
+                    <p class="description">
+                        <pre>- {{project['org']}}</pre>
+                        {{
                     project['des']
                 }}
                 <br>
-                <font size = "20px" color="green"><strong>{{ project["Type of Comp"] }}</strong></font>
-                    <br>
-                <font size = "20px" color="green"><strong>{{ project["Type of Comp"] }}</strong></font></p>
+                <strong>Duration</strong> : {{project['duration']}}
+                <br>
+                <font size = "5" color="red"><strong>{{ project["Type of Comp"] + "   "}}</strong></font>
+                <font size = "5" color="green"><strong>{{ project["up or on"] }}</strong></font></p>
                 </div>
+                    {% endif %}
                 {% endfor %}
-              <!--   <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/building.jpg"></a>
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><a href="#"></a><img class="img-fluid" src="static/img/loft.jpg">
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/minibus.jpeg"></a>
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/minibus.jpeg"></a>
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><a href="#"><img class="img-fluid" src="static/img/minibus.jpeg"></a>
-                    <h3 class="name">Project Name</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div> -->
-            </div>
+
+            </div> -->
+
+        </div>
         </div>
     </div>
     <div data-aos="fade-up" data-aos-duration="950" id="aboutus" class="footer-dark" style="background-color:rgb(33,33,33);font-family:Montserrat, sans-serif;">
@@ -156,6 +226,7 @@
     <script src="static/js/bs-animation.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+    <script src="static/js/image-card-materialize.js"></script>
 </body>
 
 </html>
