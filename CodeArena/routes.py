@@ -1,6 +1,7 @@
 from flask import redirect, url_for, request, render_template, flash, session, escape
 from CodeArena import app
 from datetime import timedelta
+import re
 
 
 @app.before_request
@@ -25,6 +26,9 @@ def login2():
     print(f"\n{session.items()}")
     if 'username' in session:
         return redirect(url_for('fights'))
+    elif 'times' in session:
+        if session['times'] >= 3:
+            return redirect(url_for('logout'))
 
     error = ""
     if request.method == "POST":
@@ -36,6 +40,7 @@ def login2():
             flash(f'Welcome back {em}')
             print(f'{em} and {pw}')
             session['username'] = em
+            session['times'] = 0
             print(f"\n{session.items()}")
             next_page = request.args.get('next')
             return redirect(url_for('fights')) if next_page else redirect(url_for('fights'))
@@ -49,6 +54,7 @@ def login2():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('_flashes', None)
     print(f'{session.items()} present in logout')
     return redirect(url_for('indexs'))
 
@@ -82,7 +88,7 @@ usr_details = {
     "silver": 7,
     "bronze": 9,
     "style": "Python",
-    "programming languages used": "Python",
+    "programming languages used": ["Python"],
     "Join date": "2018-08-12",
     "battles": 15
 }
@@ -94,27 +100,55 @@ def accs():
         username_session = escape(session['username']).capitalize()
         # call a method that returns all the details of the user as a dictionary given the email id
 
-        return render_template('acc.html', session_user_name=username_session)
+        return render_template('acc.html',
+                               session_user_name=username_session,
+                               dets=usr_details)
+
     return redirect(url_for('login1'))
 
 
 @app.route('/acc', methods=['GET', 'POST'])
 def accs2():
     error = ""
-    if request.method == "POST":
-        em = request.form['email']
-        pw = request.form['password']
-        print(f'{em} and {pw}')
-        if em == "admin" and pw == "admin":
-            print(f'{em} and {pw}')
-            flash(f'Welcome back {user}')
-            print(f'{em} and {pw}')
-            return redirect(url_for('compete'))
+    if 'times' in session:
+        print("entered 1")
+        if session['times'] >= 3:
+            print("entered 2")
+            return redirect(url_for('logout'))
+    if 'username' in session:
+        print("entered 3")
+        if request.method == "POST":
+            print("entered 4")
+            oldpass = request.form['oldpass']
+            newpass = request.form['newpass']
+            renewpass = request.form['renewpass']
 
-        else:
-            error = "Error"
-            flash(error)
-            return render_template("acc.html", title="Login")
+            if renewpass == newpass and newpass != oldpass:  # and newpass satisfies password constraints
+                # print(f'{em} and {pw}')
+                # function that returns true or false with old pass and email
+                #
+                if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', newpass):
+                    error = "Weak Password"
+                    flash(error)
+                    return render_template("acc.html", title="Login", dets=usr_details)
+
+                if oldpass == "admin":
+
+                    # send new pass and email and change the password
+                    # if success
+                    flash(f'Success')
+                    return render_template("acc.html", title="Login", dets=usr_details)
+                else:
+                    error = "Old Password"
+                    flash(error)
+                    session['times'] += 1
+                    return render_template("acc.html", title="Login", dets=usr_details)
+            else:
+                error = "Password Not Match"
+                flash(error)
+                return render_template("acc.html", title="Login", dets=usr_details)
+    else:
+        return redirect(url_for('logout'))
 
 
 upcoming = [
@@ -249,6 +283,10 @@ def cre2():
         #     error = "Error"
         #     flash(error)
         #     return render_template("login.html", title="Login", error=error)
+        if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', pw):
+            error = "Weak Password"
+            flash(error)
+            return redirect(url_for('cre'))
         if name == "admin" and em == "admin@gmail.com" and pw == pw2:
             print(f' inside {em} and {pw}\n {name} and {pw2}')
             return redirect(url_for('fights'))
@@ -257,7 +295,6 @@ def cre2():
         if em != "admin@gmail.com":
             flash(f'Email')
         if pw != pw2:
-            print('asdfasdfasdfasdfasdhvufvasdidufvasiudvfiuasdvfusdavfiuavsdiufvsiaudvfiuvasidfv\n\n')
             flash(f'Password')
             error = "Passwords don't match."
 

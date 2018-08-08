@@ -51,9 +51,9 @@
                 </div>
             </nav>
         </section>
-        <section style="margin-bottom:40pxpx;">
+        <section style="margin-bottom:40px;">
             <div class="row with-userface">
-                <div class="col"><i class="fa fa-user-circle-o userface-tab" data-aos="fade-down" data-aos-duration="700" data-aos-delay="150" id="userface" style="font-size:130px;background-position:center;margin-left:0px;color:rgba(0,0,0,0.99);padding:15px;"></i></div>
+                <div class="col"><i class="fa fa-user-circle-o userface-tab" data-aos="fade-down" data-aos-duration="700" data-aos-delay="150" id="userface" style="font-size:130px;background-position:center;margin-left:0px;color:rgba(255,255,255,1.0);padding:15px;"></i></div>
             </div>
             <div>
                 <div data-bs-parallax-bg="true" id="userinfo" style="background-position:center;background-size:cover;margin:0 auto;background-image:url(static/img/stars-3840x2160-galaxy-4k-6362.jpg);">
@@ -63,88 +63,146 @@
                         </thead>
                         <tbody style="padding:10px;">
                             <tr>
-                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Name:</td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Abhishek Varma&nbsp;</td>
+                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Name</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">{{dets["name"]}}&nbsp;</td>
                             </tr>
                             <tr>
-                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Email:</td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">abhi@bub.com</td>
+                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Email</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">{{dets["email"]}}</td>
                             </tr>
                             <tr>
                                 <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;"><i class="fa fa-trophy" style="color:#e39b0f;"></i></td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">7</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">{{dets["golds"]}}</td>
                             </tr>
                             <tr>
                                 <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;"><i class="fa fa-trophy" style="color:#a4a095;"></i></td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">3</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16 px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">{{dets["silver"]}}</td>
                             </tr>
                             <tr>
                                 <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;"><i class="fa fa-trophy" style="color:#876300;"></i></td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">3</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">{{dets["bronze"]}}</td>
                             </tr>
                             <tr>
-                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;color:rgb(251,244,244);">Programming Style:</td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Pythonic&nbsp;</td>
+                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;color:rgb(251,244,244);">Analyzed Character </td>
+                                {% if "Python" in dets["style"] %}
+                            <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Pythonista&nbsp;</td>
+                                {% elif "Java" in dets["style"] %}
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Object Pedantic&nbsp;</td>
+                                {% elif "C" in dets["style"] %}
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Diehard Ritchie&nbsp;</td>
+                                {% endif %}
                             </tr>
+
                             <tr>
-                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;color:rgb(251,244,244);">Programming Languages used:</td>
-                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">Python,C,Java</td>
+                                <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;color:rgb(251,244,244);">Programming Languages used</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">
+                                    {% for i in dets["programming languages used"] %}
+                                        {{i + "  "}}
+                                    {% endfor %}
+                                </td>
                             </tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
-                            <tr></tr>
+                            <tr><td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;color:rgb(251,244,244);"> Join Date</td>
+                                <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">
+
+                                        {{dets["Join date"]}}
+
+                                </td></tr>
+
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div data-bs-parallax-bg="true" id="userinfo" style="background-position:center;background-size:cover;margin:0 auto;background-image:url(static/img/stars-3840x2160-galaxy-4k-6362.jpg);">
-                <table class="table">
-                    <thead id="headd">
-                        <tr></tr>
-                    </thead>
-                    <tbody style="padding:10px;">
-                        <tr>
-                            <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">No. of Battles fought:</td>
-                            <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">15</td>
-                        </tr>
-                        <tr>
-                            <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">More info</td>
-                            <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">more info</td>
-                        </tr>
-                        <tr>
-                            <td data-bs-hover-animate="pulse" class="cell-left" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">More info</td>
-                            <td data-bs-hover-animate="pulse" class="coll-right" style="font-size:16px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;">more info</td>
-                        </tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
-                    </tbody>
-                </table>
             </div>
         </section>
         <section style="padding:20px;">
             <div class="div-form-acc">
                 <hr>
                 <div class="container form-cons">
-                    <form data-aos="fade-up" data-aos-duration="700" data-aos-once="true" class="form-acc" style="margin:0 auto;">
+                    <form method="post"  data-aos="fade-up" data-aos-duration="700" data-aos-once="true" class="form-acc" style="margin:0 auto;">
                         <h1 style="font-family:Montserrat, sans-serif;font-size:24px;font-weight:400;">Change Password</h1>
                         <div>
-                            <div class="form-group"><input class="form-control pass-acc" type="password" name="oldpass" required="" placeholder="Old Password" style="font-family:Montserrat, sans-serif;color:rgb(255,255,255);"></div>
-                            <div class="form-group"><input class="form-control pass-acc" type="password" name="newpass" required="" placeholder="New Password" style="font-family:Montserrat, sans-serif;color:rgb(255,255,255);"></div>
-                            <div class="form-group"><input class="form-control pass-acc" type="password" name="renewpass" required="" placeholder="Re-enter New Password" style="font-family:Montserrat, sans-serif;color:rgb(255,255,255);"></div>
-                            <div class="form-group"><button class="btn btn-primary btn-block btn-acc" type="submit" style="font-family:Montserrat, sans-serif;background-color:rgba(13,38,65,0.55);">Change password</button></div>
+                            <div class="form-group"><input class="form-control pass-acc" type="password" name="oldpass" required="" placeholder="Old Password" style="font-family:Montserrat, sans-serif;color:rgb(255,255,255);">
+                                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% if "Old Password" in messages %}
+                        {% for message in messages %}
+
+                                <small class="form-text text-danger">Incorrect Password</small>
+
+                        {% endfor %}
+                    {% endif %}
+                    {% endif %}
+                {% endwith %}
+                            </div>
+                            <div class="form-group"><input class="form-control pass-acc" type="password" name="newpass" required="" placeholder="New Password" style="font-family:Montserrat, sans-serif;color:rgb(255,255,255);">
+                                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% if "Password Not Match" in messages %}
+                        {% for message in messages %}
+
+                                <small class="form-text text-danger">Please make sure the New Passwords match and are different from the Old Password</small>
+
+                        {% endfor %}
+                    {% elif "Weak Password" in messages %}
+                        {% for message in messages %}
+
+                                <small class="form-text text-danger">{{message}}</small>
+
+                        {% endfor %}
+                    {% endif %}
+                    {% endif %}
+                {% endwith %}
+                            </div>
+                            <div class="form-group"><input class="form-control pass-acc" type="password" name="renewpass" required="" placeholder="Re-enter New Password" style="font-family:Montserrat, sans-serif;
+                            color:rgb(255,255,255);">
+                                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% if "Password Not Match" in messages %}
+                        {% for message in messages %}
+
+                                <small class="form-text text-danger">Please make sure the New Passwords match and are different from the Old Password</small>
+
+                        {% endfor %}
+                    {% elif "Weak Password" in messages %}
+                        {% for message in messages %}
+
+                                <small class="form-text text-danger">{{message}}</small>
+
+                        {% endfor %}
+                    {% endif %}
+                    {% endif %}
+                {% endwith %}
+                            </div>
+                            <div class="form-group"><button class="btn btn-primary btn-block btn-acc" id="scrollSuccess" type="submit" style="font-family:Montserrat, sans-serif;background-color:rgba(13,38,65,0.55);">Change password</button></div>
                         </div>
+                         {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                     {% if "Success" in messages %}
+                        {% for message in messages %}
+
+                                <div  class="alert alert-success alert-dismissible fade show">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success!</strong> Your password has been changed.
+</div>
+
+
+                        {% endfor %}
+                         {% endif %}
+                    {% endif %}
+                {% endwith %}
+                  {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Success" in messages or "Old Password" in messages or "Password Not Match" in messages %}
+
+                                        <script>
+                                            document.getElementById('scrollSuccess').scrollIntoView();
+                                        </script>
+
+
+                        {% endif %}
+                    {% endif %}
+                {% endwith %}
                     </form>
+
                 </div>
             </div>
         </section>

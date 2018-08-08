@@ -74,6 +74,8 @@
                                  <small class="form-text text-danger" id="messy">{{error}}</small>
                             {% endif %}
                         {% endfor %}
+                    {% elif "Weak Password" in messages %}
+                        <small class="form-text text-danger" id="messy">Weak Password. Please choose another one.</small>
                     {% endif %}
                 {% endwith %}
                </div>
