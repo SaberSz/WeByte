@@ -2,6 +2,9 @@ from flask import redirect, url_for, request, render_template, flash, session, e
 from CodeArena import app
 from datetime import timedelta
 import re
+from CodeArena.db import userdbop
+
+user_db = None
 
 
 @app.before_request
@@ -32,11 +35,14 @@ def login2():
 
     error = ""
     if request.method == "POST":
+        global user_db
         em = request.form['email']
         pw = request.form['password']
-        print(f'{em} and {pw}')
-        if em == "admin@gmail.com" and pw == "admin":
-            print(f'{em} and {pw}')
+        print(f'{em} and {pw} 1')
+        if user_db is None:
+            user_db = userdbop()
+        if user_db.logincheck(em, pw):
+            print(f'{em} and {pw} 2')
             flash(f'Welcome back {em}')
             print(f'{em} and {pw}')
             session['username'] = em
@@ -55,6 +61,8 @@ def login2():
 def logout():
     session.pop('username', None)
     session.pop('_flashes', None)
+    global user_db
+    user_db.__del__()
     print(f'{session.items()} present in logout')
     return redirect(url_for('indexs'))
 
@@ -68,15 +76,26 @@ def indexs():
 
 @app.route("/home", methods=['GET', 'POST'])
 def homesugg():
+    global user_db
     error = ""
-    if request.method == "POST":
-        print("\nsdfsadfasdfasdfasdf\n")
-        name = request.form['conname']
-        email = request.form['conmail']
-        sub = request.form['consel']
-        msg = request.form['message']
-        # Enter into database amd should return True or False
-        flash(f'Thank you {name} for getting in touch with us. We will get back you shortly.')
+    try:
+        if request.method == "POST":
+            print("\nsdfsadfasdfasdfasdf\n")
+            name = request.form['conname']
+            email = request.form['conmail']
+            sub = request.form['consel']
+            msg = request.form['message']
+            if user_db is None:
+                user_db = userdbop()
+            if user_db.contactus(name, email, sub, msg):
+                flash(f'Thank you {name} for getting in touch with us. We will get back you shortly.')
+                flash('Scroll')
+            else:
+                flash(f'Opps! Something went wrong:(')
+                flash('Scroll')
+            return redirect(url_for('indexs'))
+    except:
+        flash(f'Opps! Something went wrong:(')
         flash('Scroll')
         return redirect(url_for('indexs'))
 
@@ -96,10 +115,11 @@ usr_details = {
 
 @app.route('/acc')
 def accs():
+    global user_db
     if 'username' in session:
         username_session = escape(session['username']).capitalize()
         # call a method that returns all the details of the user as a dictionary given the email id
-
+        usr_details = user_db.fetchaccountdetailsofuser(username_session)
         return render_template('acc.html',
                                session_user_name=username_session,
                                dets=usr_details)
@@ -110,6 +130,7 @@ def accs():
 @app.route('/acc', methods=['GET', 'POST'])
 def accs2():
     error = ""
+    global user_db
     if 'times' in session:
         print("entered 1")
         if session['times'] >= 3:
@@ -117,11 +138,16 @@ def accs2():
             return redirect(url_for('logout'))
     if 'username' in session:
         print("entered 3")
+
         if request.method == "POST":
             print("entered 4")
             oldpass = request.form['oldpass']
             newpass = request.form['newpass']
             renewpass = request.form['renewpass']
+            if user_db is None:
+                user_db = userdbop()
+            username_session = escape(session['username']).capitalize()
+            usr_details = user_db.fetchaccountdetailsofuser(username_session)
 
             if renewpass == newpass and newpass != oldpass:  # and newpass satisfies password constraints
                 # print(f'{em} and {pw}')
@@ -131,11 +157,12 @@ def accs2():
                     error = "Weak Password"
                     flash(error)
                     return render_template("acc.html", title="Login", dets=usr_details)
-
-                if oldpass == "admin":
+                em = escape(session['username']).capitalize()
+                if user_db.logincheck(em, oldpass):
 
                     # send new pass and email and change the password
                     # if success
+                    user_db.makepwdupdate(em, newpass)
                     flash(f'Success')
                     return render_template("acc.html", title="Login", dets=usr_details)
                 else:
@@ -246,12 +273,13 @@ upcoming = [
 
 @app.route('/fight')
 def fights():
-
+    global user_db
     if 'username' in session:
 
         em = escape(session['username']).capitalize()
         print(f'the passed value is {em}')
         # make call to database and get all upcoming competitions as a list and return the list
+        upcoming = user_db.fetchupcomingbattles()
         return render_template('compete.html',
                                session_user_name=em,
                                upcoming=upcoming)
@@ -268,6 +296,7 @@ def cre():
 @app.route('/signup', methods=['GET', 'POST'])
 def cre2():
     error = ""
+    global user_db
     if request.method == "POST":
         name = request.form['name']
         em = request.form['email']
@@ -283,29 +312,38 @@ def cre2():
         #     error = "Error"
         #     flash(error)
         #     return render_template("login.html", title="Login", error=error)
-        if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', pw):
-            error = "Weak Password"
-            flash(error)
-            return redirect(url_for('cre'))
-        if name == "admin" and em == "admin@gmail.com" and pw == pw2:
-            print(f' inside {em} and {pw}\n {name} and {pw2}')
-            return redirect(url_for('fights'))
-        if name != "admin":
-            flash(f'Username')
-        if em != "admin@gmail.com":
-            flash(f'Email')
         if pw != pw2:
             flash(f'Password')
             error = "Passwords don't match."
+            print(error)
+            return redirect(url_for('cre'))
+        if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', pw):
+            error = "Weak Password"
+            flash(error)
+            print(error)
+            return redirect(url_for('cre'))
+        user_db = userdbop()
+        res = user_db.registration(em, name, pw)
+        if res == "Pass":
+            print(f' inside {em} and {pw}\n {name} and {pw2}')
+            return redirect(url_for('fights'))
+        elif res == "Username":
+            print("Username")
+            flash(f'Username')
+        elif res == "Email":
+            print("Email")
+            flash(f'Email')
 
         return redirect(url_for('cre'))
 
 
 @app.route('/problem')
 def prob():
+    global user_db
     if 'username' in session:
         cid = request.args.get('name')
         print(f'The value of cid is {cid}')
+
         username_session = escape(session['username']).capitalize()
 
         return render_template('progs.html',
@@ -359,8 +397,10 @@ resultant = [
 
 @app.route('/results')
 def rs():
+    global user_db
     if 'username' in session:
         username_session = escape(session['username']).capitalize()
+        resultant = user_db.fetchfinishedbattles()
         return render_template('result.html',
                                session_user_name=username_session,
                                resultant=resultant)
@@ -369,6 +409,7 @@ def rs():
 
 @app.route('/restab')
 def rst():
+    global user_db
     if 'username' in session:
         username_session = escape(session['username']).capitalize()
         return render_template('resultstab.html', session_user_name=username_session)
