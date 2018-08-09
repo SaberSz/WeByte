@@ -3,6 +3,8 @@ from CodeArena import app
 from datetime import timedelta
 import re
 from CodeArena.db import userdbop
+from CodeArena.CodeUtilities import convert_to_file
+from CodeArena.judge import judge_me
 
 
 @app.before_request
@@ -13,7 +15,7 @@ def make_session_active():
 @app.before_request
 def make_session_permanent():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=5)
+    app.permanent_session_lifetime = timedelta(minutes=180)
 
 
 @app.route('/login')
@@ -325,34 +327,68 @@ def cre2():
         return redirect(url_for('cre'))
 
 
-@app.route('/problem',methods=['GET','POST'])
+@app.route('/problem')
 def prob():
+    print("posty")
     if 'username' in session:
-        if request.method=="POST":
+        cid = request.args.get('name')
+        print(f'The value of cid is {cid}')
+        user_db = userdbop()
+        username_session = escape(session['username'])
+        cid, resultant1 = user_db.fetch_problem_statments(cid)
+        for i in resultant1:
+            for k in i.items():
+                print(k)
+                print("\n")
+            print("\n\n")
+        pgs = user_db.if_previous_submitted(cid, username_session)
+        return render_template('progs.html',
+                               session_user_name=username_session, results=resultant1, cid=cid, pgs=pgs, getty=True)
+    return redirect(url_for('login1'))
+
+
+@app.route('/problem', methods=['GET', 'POST'])
+def prob2():
+    print("posty")
+    if 'username' in session:
+        if request.method == "POST":
             print("posty")
-            prgs=request.form['enterprog']
+            prgs = request.form['enterprog']
             cid = request.args.get('cid')
-            pno=request.args.get('no')
+            pno = request.args.get('no')
             print(f'{pno} and cid={cid}')
             print(f'program starts here\n{prgs}')
-            user_db=userdbop()
-            username_session = escape(session['username'])
-            cid, resultant1 = user_db.fetch_problem_statments(cid)
-            return render_template('progs.html',
-                                   session_user_name=username_session, results=resultant1,cid=cid,progs=prgs)
-        else:
-            cid = request.args.get('name')
-            print(f'The value of cid is {cid}')
-            user_db=userdbop()
-            username_session = escape(session['username'])
-            cid, resultant1 = user_db.fetch_problem_statments(cid)
-            for i in resultant1:
-                for k in i.items():
-                    print(k)
-                    print("\n")
-                print("\n\n")
-            return render_template('progs.html',
-                                   session_user_name=username_session, results=resultant1,cid=cid)
+            # send the program to a function that sees if the answer is right.
+            # The program should return Pass or the Error that is generated.
+            user_db = userdbop()
+            if user_db.is_time_left(cid):
+                test_cases = user_db.fetch_test_cases(cid, pno)
+                prgs_file = convert_to_file(prgs)
+                judgements = judge_me(prgs_file, test_cases)
+                op = {}
+                op["program number"] = pno
+                cnt = 1
+                for i in judgements:
+                    op[" Result " + str(cnt)] = i
+                    cnt += 1
+                db_op
+                if "NOT PASSED" in judgements:
+                    db_op = 0
+                else:
+                    db_op = 1
+                username_session = escape(session['username'])
+                # insert into database
+                user_db.is_new_version_better(cid, pno, username_session, prgs, db_op)
+                cid, resultant1 = user_db.fetch_problem_statments(cid)
+                return render_template('progs.html',
+                                       session_user_name=username_session,
+                                       results=resultant1,
+                                       cid=cid,
+                                       progs=prgs,
+                                       op=op,
+                                       getty=False)
+            else:
+                return redirect(url_for('fights'))
     return redirect(url_for('login1'))
 
 

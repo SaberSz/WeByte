@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 09, 2018 at 08:02 AM
+-- Generation Time: Aug 09, 2018 at 06:57 PM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.2.1
 
@@ -49,9 +49,9 @@ CREATE TABLE `competitions` (
 --
 
 INSERT INTO `competitions` (`Compid`, `cName`, `Typecmp`, `Des`, `imgs`, `duration`, `Date`, `Time1`, `horc`, `Org`) VALUES
-('1', 'fafafeaf', 1, 'faefafaefaef', 'sample-1.jpg', '3 hours', '2018-08-17', '05:00:00', 0, 'Cognizant'),
+('1', 'fafafeaf', 2, 'faefafaefaef', 'sample-1.jpg', '3 hours', '2018-08-17', '05:00:00', 0, 'Cognizant'),
 ('2', 'Jun easy', 0, 'Jun easy biatch.', 'desk.jpg', '3 hours', '2018-08-30', '05:25:34', 0, 'rebvrwbwbw'),
-('3', 'August easy', 1, 'I see in your eyes the same fear that would take the heart of me. A day may come when the courage of programmers fails, when we forsake our code and break all bonds with the compiler, but it is not this day. An hour of noobs and shattered keys, when the age of programmers comes crashing down! But it is not this day! This day we fight! By all that you hold dear on this good Earth, I bid you stand, Programmers of Earth!', 'loft.jpg', '3 hours', '2018-08-31', '23:00:00', 1, 'Infosys');
+('3', 'August easy', 1, 'You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.', 'loft.jpg', '3 hours', '2018-08-31', '23:00:00', 1, 'Infosys');
 
 -- --------------------------------------------------------
 
@@ -148,8 +148,29 @@ CREATE TABLE `results` (
   `problemid` int(11) NOT NULL,
   `submission` varchar(10000) NOT NULL,
   `Solved` tinyint(1) NOT NULL DEFAULT '0',
-  `Submettime` date NOT NULL,
-  `Language` varchar(100) NOT NULL
+  `Submettime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Language` varchar(100) NOT NULL DEFAULT 'Python'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resulttrack`
+--
+
+DROP TABLE IF EXISTS `resulttrack`;
+CREATE TABLE `resulttrack` (
+  `CompId` varchar(100) NOT NULL,
+  `Email` varchar(60) NOT NULL,
+  `Problem 1` int(11) NOT NULL,
+  `Problem 2` int(11) NOT NULL,
+  `Problem 3` int(11) NOT NULL,
+  `Problem 4` int(11) NOT NULL,
+  `Time1` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Time2` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Time3` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Time4` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Total marks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
