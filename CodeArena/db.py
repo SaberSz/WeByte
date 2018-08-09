@@ -5,22 +5,20 @@ import mysql.connector as ms
 
 
 class userdbop:
-    def __init__(self):
-        self.cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
-
-    def __del__(self):
-        self.cnx.close()
 
     def logincheck(self, email, pwd):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         print(email)
         print("pwd sent=", pwd)
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
+            print(f'here is d 1')
             # print("ohhhhdwhfhefhewfh")
             # pw_hash = bcrypt.generate_password_hash('frgvsfbfsbvrwrvdf').decode('utf-8')
             # print("hash pass", pw_hash)
             stmt = f'Select `Password` from `users` where `Email` ="{email}"'
             cur.execute(stmt)
+            print(f'here is d 1')
             d = cur.fetchall()
             print(f'here is d {d}')
             if d:
@@ -40,8 +38,9 @@ class userdbop:
             return False
 
     def registration(self, email, usn, pwd):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             d = []
             u = []
             p = []
@@ -61,7 +60,7 @@ class userdbop:
                     z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
                     stm21t = f'INSERT INTO `users`(`Email`, `Username`, `Password`) VALUES ("{email}","{usn}","{z}")'
                     cur.execute(stm21t)
-                    self.cnx.commit()
+                    cnx.commit()
                     return f'Pass'
                 else:
                     return f'Email'
@@ -78,11 +77,12 @@ class userdbop:
             return False
 
     def contactus(self, name, email, sub, mess):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             stmt = f'INSERT INTO `contactus`(`Name`, `Email`, `Subject`, `Message`) VALUES ("{name}","{email}","{sub}","{mess}")'
             cur.execute(stmt)
-            self.cnx.commit()
+            cnx.commit()
             return True
         except ms.Error as e:
             print(e)
@@ -93,9 +93,10 @@ class userdbop:
             return False
 
     def fetchupcomingbattles(self):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         d = []
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             stmt = f'SELECT Compid,imgs,cName,Des,Typecmp,duration,Date,horc,Time1,Org FROM `competitions` where Typecmp != 0 ORDER BY `Date` ASC, `Time1` ASC'
             cur.execute(stmt)
             d = cur.fetchall()
@@ -133,9 +134,10 @@ class userdbop:
         "times": "20:00:00",
         "org": "Cognizant"
         '''
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         d = []
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             stmt = f'SELECT Compid,imgs,cName,Des,Date,horc,Time1,Org FROM `competitions` where Typecmp = 0 ORDER BY `Date` DESC, `Time1` DESC'
             cur.execute(stmt)
             d = cur.fetchall()
@@ -160,10 +162,11 @@ class userdbop:
 
     def fetchaccountdetailsofuser(self, email):
         d = []
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         mx = []
         dick = {}
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             stmt1 = f'SELECT `Username`,`joindate` FROM `users` WHERE `Email`="{email}"'
             cur.execute(stmt1)
             print("d")
@@ -227,8 +230,9 @@ class userdbop:
             return None
 
     def checkauthenticowner(self, email, pwd):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             d = []
             st = f'Select * from `users` where `Email`= "{email}" and `Password`=""'
             cur.execute(st)
@@ -245,12 +249,13 @@ class userdbop:
             return None
 
     def makepwdupdate(self, email, pwd):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = self.cnx.cursor()
+            cur = cnx.cursor()
             z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
             st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`="{email}"'
             cur.execute(st)
-            self.cnx.commit()
+            cnx.commit()
             return True
         except ms.Error as e:
             print(e)
@@ -259,7 +264,36 @@ class userdbop:
             print(e)
             return None
 
+    def fetch_problem_statments(self, cid):
+        '''
+        "cid": 12323,
+        "problem name": "sample-1.jpg",
+        "problem statement": "Infinity Code Wars",
+        "input": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "output": "2018-08-12",
 
-user1 = userdbop()
+        '''
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+        d = []
+        try:
+            cur = cnx.cursor()
+            stmt = f'SELECT  `probno`, `probstmt`, `probname`, `testcase`, `probinput`, `proboutput` FROM `problems` WHERE `Compid`={cid} and `testcase` = 1 ORDER BY `probno` ASC'
+            cur.execute(stmt)
+            d = cur.fetchall()
+            res = []
+            for i in d:
+                var = dict(zip(('problem number', 'problem name', 'problem statment', 'input', 'output'), i))
+                res.append(var)
+            # print(res)
+            return (cid, res)
+        except ms.Error as e:
+            print("db error")
+            return None
+        except TypeError as e:
+            print(e)
+            return None
+
+
+user_db = userdbop()
+print(user_db.fetch_problem_statments(3))
 # user1.registration("admin@gmail.com", "apple", "admin123")
-print(user1.fetchupcomingbattles())

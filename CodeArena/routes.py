@@ -4,8 +4,6 @@ from datetime import timedelta
 import re
 from CodeArena.db import userdbop
 
-user_db = None
-
 
 @app.before_request
 def make_session_active():
@@ -27,20 +25,15 @@ def login1():
 @app.route("/login", methods=['GET', 'POST'])
 def login2():
     print(f"\n{session.items()}")
-    if 'username' in session:
-        return redirect(url_for('fights'))
-    elif 'times' in session:
+    if 'times' in session:
         if session['times'] >= 3:
             return redirect(url_for('logout'))
-
     error = ""
     if request.method == "POST":
-        global user_db
         em = request.form['email']
         pw = request.form['password']
         print(f'{em} and {pw} 1')
-        if user_db is None:
-            user_db = userdbop()
+        user_db = userdbop()
         if user_db.logincheck(em, pw):
             print(f'{em} and {pw} 2')
             flash(f'Welcome back {em}')
@@ -61,8 +54,6 @@ def login2():
 def logout():
     session.pop('username', None)
     session.pop('_flashes', None)
-    global user_db
-    user_db.__del__()
     print(f'{session.items()} present in logout')
     return redirect(url_for('indexs'))
 
@@ -76,7 +67,6 @@ def indexs():
 
 @app.route("/home", methods=['GET', 'POST'])
 def homesugg():
-    global user_db
     error = ""
     try:
         if request.method == "POST":
@@ -85,8 +75,7 @@ def homesugg():
             email = request.form['conmail']
             sub = request.form['consel']
             msg = request.form['message']
-            if user_db is None:
-                user_db = userdbop()
+            user_db = userdbop()
             if user_db.contactus(name, email, sub, msg):
                 flash(f'Thank you {name} for getting in touch with us. We will get back you shortly.')
                 flash('Scroll')
@@ -115,9 +104,9 @@ usr_details = {
 
 @app.route('/acc')
 def accs():
-    global user_db
     if 'username' in session:
-        username_session = escape(session['username']).capitalize()
+        user_db = userdbop()
+        username_session = escape(session['username'])
         # call a method that returns all the details of the user as a dictionary given the email id
         usr_details = user_db.fetchaccountdetailsofuser(username_session)
         return render_template('acc.html',
@@ -130,7 +119,6 @@ def accs():
 @app.route('/acc', methods=['GET', 'POST'])
 def accs2():
     error = ""
-    global user_db
     if 'times' in session:
         print("entered 1")
         if session['times'] >= 3:
@@ -144,9 +132,8 @@ def accs2():
             oldpass = request.form['oldpass']
             newpass = request.form['newpass']
             renewpass = request.form['renewpass']
-            if user_db is None:
-                user_db = userdbop()
-            username_session = escape(session['username']).capitalize()
+            user_db = userdbop()
+            username_session = escape(session['username'])
             usr_details = user_db.fetchaccountdetailsofuser(username_session)
 
             if renewpass == newpass and newpass != oldpass:  # and newpass satisfies password constraints
@@ -157,7 +144,7 @@ def accs2():
                     error = "Weak Password"
                     flash(error)
                     return render_template("acc.html", title="Login", dets=usr_details)
-                em = escape(session['username']).capitalize()
+                em = escape(session['username'])
                 if user_db.logincheck(em, oldpass):
 
                     # send new pass and email and change the password
@@ -273,13 +260,15 @@ upcoming = [
 
 @app.route('/fight')
 def fights():
-    global user_db
+
     if 'username' in session:
 
-        em = escape(session['username']).capitalize()
+        em = escape(session['username'])
         print(f'the passed value is {em}')
         # make call to database and get all upcoming competitions as a list and return the list
+        user_db = userdbop()
         upcoming = user_db.fetchupcomingbattles()
+        print(upcoming)
         return render_template('compete.html',
                                session_user_name=em,
                                upcoming=upcoming)
@@ -296,7 +285,6 @@ def cre():
 @app.route('/signup', methods=['GET', 'POST'])
 def cre2():
     error = ""
-    global user_db
     if request.method == "POST":
         name = request.form['name']
         em = request.form['email']
@@ -339,15 +327,14 @@ def cre2():
 
 @app.route('/problem')
 def prob():
-    global user_db
     if 'username' in session:
         cid = request.args.get('name')
         print(f'The value of cid is {cid}')
-
-        username_session = escape(session['username']).capitalize()
-
+        user_db = userdbop()
+        username_session = escape(session['username'])
+        cid, resultant1 = user_db.fetch_problem_statments(cid)
         return render_template('progs.html',
-                               session_user_name=username_session)
+                               session_user_name=username_session, results=resultant1)
     return redirect(url_for('login1'))
 
 
@@ -397,9 +384,9 @@ resultant = [
 
 @app.route('/results')
 def rs():
-    global user_db
     if 'username' in session:
-        username_session = escape(session['username']).capitalize()
+        username_session = escape(session['username'])
+        user_db = userdbop()
         resultant = user_db.fetchfinishedbattles()
         return render_template('result.html',
                                session_user_name=username_session,
@@ -409,9 +396,9 @@ def rs():
 
 @app.route('/restab')
 def rst():
-    global user_db
     if 'username' in session:
-        username_session = escape(session['username']).capitalize()
+        user_db = userdbop()
+        username_session = escape(session['username'])
         return render_template('resultstab.html', session_user_name=username_session)
     return redirect(url_for('login1'))
 
