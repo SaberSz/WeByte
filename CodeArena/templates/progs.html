@@ -62,57 +62,59 @@
         </div>
         <div class="card-body">
             <div id="nav-tabContent" class="tab-content">
-                <div id="item-1-1" class="tab-pane fade show active" role="tabpanel" aria-labelledby="item-1-1-tab" style="font-family:Montserrat, sans-serif;">
-                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
-    inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
-<pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
-
-    Given a series of numbers(inputs) and each number(N) on a newline.
-
-OUTPUT :
-
-    For the given input , Output the required ans.
-
-NOTE :
-
-    No. of test cases are unknown.
-
-    Use Faster I/O Techniques.
-
-
+                {% for i in results %}
+                 <div id="item-1-{{i['problem number']}}" class="tab-pane fade show active" role="tabpanel" aria-labelledby="item-1-{{i['problem number']}}-tab" style="font-family:Montserrat, sans-serif;">
+                    <h4>{{i['problem name']}}</h4><p style="font-family:Montserrat, sans-serif;">
+                {% if "INPUT" in i['problem statment'] %}
+                        {{i['problem statment'][:(i['problem statment'].index("INPUT")-1
+                        )]}}
+                {% else %}
+                        {{i['problem statment'][:(i['problem statment'].index("Input")-1)]}}
+                {% endif %}
+                <br />
+<pre style="font-family:Montserrat, sans-serif; color: white">
+{% if "INPUT" in i['problem statment'] %}
+                        {{i['problem statment'][(i['problem statment'].index("INPUT")-1):]}}
+                {% else %}
+                        {{i['problem statment'][(i['problem statment'].index("Input")-1):]}}
+                {% endif %}
 </pre>
 </p>
                     <div class="row">
                         <div class="col" id="input-in-problems">
                             <div><p><strong>Input</strong></p>
 <pre style="font-family:Montserrat, sans-serif; color: white">
-2
-3 4
-1 2 5
-3 2
-2 5 5
+{{i['input']}}
 </pre></div>
                         </div>
                         <div class="col">
                             <div><p><strong>Output</strong></p>
 <pre style="font-family:Montserrat, sans-serif; color: white">
-3
-0
+{{i['output']}}
 </pre></div>
                         </div>
                     </div>
-                    <form>
-                        <div class="form-group">
+                    <form method="POST" action="{{url_for('prob',cid=cid,no=i['problem number'])}}">
+                      <!--   <div class="form-group">
                             <div class="dropdown" style="padding:10px;padding-right:0px;padding-left:0px;"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
                                 <div class="dropdown-menu dropdown-menu-left" role="menu"><a class="dropdown-item" role="presentation" href="#">Python</a><a class="dropdown-item" role="presentation" href="#">Java</a><a class="dropdown-item" role="presentation" href="#">C</a></div>
                             </div>
+                        </div> -->
+                        <div class="form-group">
+                            <select disabled style="padding:10px;padding-right:0px;padding-left:0px;max-width:10% " id="subject" class="form-control" name="consel" required="required">
+                                <option style="background: :#213; color:#000;" value="Python">Python</option>
+                                <option style="background: :#213; color:#000;" value="Java">Java</option>
+                                <option style="background: :#213; color:#000;" value="C">C</option>
+                            </select>
                         </div>
-                        <div class="form-group"><input class="form-control form-control-sm plains" type="text" name="chosen" value="Python" readonly="" id="plains-in-forms" style="background-color:transparent;color:rgb(255,255,255);"></div>
+
                         <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="20" spellcheck="false" name="enterprog" required="" placeholder="Enter your code here" autofocus="" id="probswritten"></textarea></div>
                         <div class="form-group"><textarea class="form-control form-control-lg textarea-in-problems" rows="10" spellcheck="false" name="opprog" readonly="" required="" placeholder="Output" id="opprob"></textarea></div>
                         <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
                     </form>
                 </div>
+                {% endfor %}
+<!--
                 <div id="item-1-2" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-2-tab" style="font-family:Montserrat, sans-serif;">
                     <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
     inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
@@ -216,7 +218,7 @@ NOTE :
                     </form>
                 </div>
                 <div id="item-1-4" class="tab-pane fade" role="tabpanel" aria-labelledby="item-1-4-tab" style="font-family:Montserrat, sans-serif;">
-                    <h4>apples and oranges</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
+                    <h4>Goku vs Vegeta</h4><p style="font-family:Montserrat, sans-serif;">In the world of dragon ball, Goku has been the greatest rival of Vegeta. Vegeta wants to surpass goku but never succeeds. Now that he knows he cant beat goku in physical strength, he wants to be satisfied by beating goku in mental strength. He gives certain
     inputs and outputs , Goku needs to find the logic and predict the output for the next inputs. Goku is struggling with the challenge, your task is to find the logic and and help him win the challenge.<br />
 <pre style="font-family:Montserrat, sans-serif; color: white">INPUT :
 
@@ -239,7 +241,11 @@ NOTE :
                         <div class="col" id="input-in-problems">
                             <div><p><strong>Input</strong></p>
 <pre style="font-family:Montserrat, sans-serif; color: white">
-apples and oranges
+2
+3 4
+1 2 5
+3 2
+2 5 5
 </pre></div>
                         </div>
                         <div class="col">
@@ -262,7 +268,7 @@ apples and oranges
                         <div class="form-group"><button class="btn btn-primary" type="button">Submit</button></div>
                     </form>
                 </div>
-            </div>
+ -->            </div>
         </div>
     </div><section class="copyright">
     <div class="copyright-inner">

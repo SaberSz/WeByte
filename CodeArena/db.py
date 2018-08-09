@@ -277,12 +277,12 @@ class userdbop:
         d = []
         try:
             cur = cnx.cursor()
-            stmt = f'SELECT  `probno`, `probstmt`, `probname`, `testcase`, `probinput`, `proboutput` FROM `problems` WHERE `Compid`={cid} and `testcase` = 1 ORDER BY `probno` ASC'
+            stmt = f'SELECT  `probno`, `probstmt`, `probname`, `probinput`, `proboutput` FROM `problems` WHERE `Compid`={cid} and `testcase` = 1 ORDER BY `probno` ASC'
             cur.execute(stmt)
             d = cur.fetchall()
             res = []
             for i in d:
-                var = dict(zip(('problem number', 'problem name', 'problem statment', 'input', 'output'), i))
+                var = dict(zip(('problem number','problem statment','problem name', 'input', 'output'), i))
                 res.append(var)
             # print(res)
             return (cid, res)

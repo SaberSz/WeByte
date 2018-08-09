@@ -325,16 +325,34 @@ def cre2():
         return redirect(url_for('cre'))
 
 
-@app.route('/problem')
+@app.route('/problem',methods=['GET','POST'])
 def prob():
     if 'username' in session:
-        cid = request.args.get('name')
-        print(f'The value of cid is {cid}')
-        user_db = userdbop()
-        username_session = escape(session['username'])
-        cid, resultant1 = user_db.fetch_problem_statments(cid)
-        return render_template('progs.html',
-                               session_user_name=username_session, results=resultant1)
+        if request.method=="POST":
+            print("posty")
+            prgs=request.form['enterprog']
+            cid = request.args.get('cid')
+            pno=request.args.get('no')
+            print(f'{pno} and cid={cid}')
+            print(f'program starts here\n{prgs}')
+            user_db=userdbop()
+            username_session = escape(session['username'])
+            cid, resultant1 = user_db.fetch_problem_statments(cid)
+            return render_template('progs.html',
+                                   session_user_name=username_session, results=resultant1,cid=cid,progs=prgs)
+        else:
+            cid = request.args.get('name')
+            print(f'The value of cid is {cid}')
+            user_db=userdbop()
+            username_session = escape(session['username'])
+            cid, resultant1 = user_db.fetch_problem_statments(cid)
+            for i in resultant1:
+                for k in i.items():
+                    print(k)
+                    print("\n")
+                print("\n\n")
+            return render_template('progs.html',
+                                   session_user_name=username_session, results=resultant1,cid=cid)
     return redirect(url_for('login1'))
 
 
