@@ -1,0 +1,14 @@
+from sys import stdin
+for _ in range(int(stdin.readline())):
+    li=[0]*32
+    n=int(stdin.readline())
+    for i in range(n):
+        num=int(stdin.readline())
+        for j in range(32):
+            if num & (1<<j):
+                li[j]+=1
+    temp=max(li)
+    for l in range(len(li)):
+        if li[l]==temp:
+            print(l)
+            break

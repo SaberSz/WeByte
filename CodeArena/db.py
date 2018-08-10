@@ -2,7 +2,8 @@
    verify email and pwd'''
 from CodeArena import bcrypt
 import mysql.connector as ms
-from CodeArena.CodeUtilities import convert_to_file
+from CodeArena.CodeUtilities import convert_to_file, find_endtime
+import os
 
 
 class userdbop:
@@ -98,7 +99,7 @@ class userdbop:
         d = []
         try:
             cur = cnx.cursor()
-            stmt = f'SELECT Compid,imgs,cName,Des,Typecmp,duration,Date,horc,Time1,Org FROM `competitions` where Typecmp != 0 ORDER BY `Date` ASC, `Time1` ASC'
+            stmt = f'SELECT Compid,imgs,cName,Des,Typecmp,duration,Date,horc,Time1,Org FROM `competitions` where Typecmp = 1 or Typecmp = 2  ORDER BY `Date` ASC, `Time1` ASC'
             cur.execute(stmt)
             d = cur.fetchall()
             res = []
@@ -265,7 +266,7 @@ class userdbop:
             print(e)
             return None
 
-    def fetch_problem_statments(self, cid):
+    def fetch_problem_statments(self, cid, pno):
         '''
         "cid": 12323,
         "problem name": "sample-1.jpg",
@@ -278,19 +279,23 @@ class userdbop:
         d = []
         try:
             cur = cnx.cursor()
-            stmt = f'SELECT  `probno`, `probstmt`, `probname`, `probinput`, `proboutput` FROM `problems` WHERE `Compid`={cid} and `testcase` = 1 ORDER BY `probno` ASC'
+            stmt = f'SELECT  `probno`, `probstmt`, `probname`, `probinput`, `proboutput`, c.`Time1`, c.`duration` FROM `problems`p  join `competitions` c on c.`Compid` =p.`Compid` WHERE p.`Compid`= {cid} and `testcase` = 1 ORDER BY `probno` ASC'
             cur.execute(stmt)
             d = cur.fetchall()
             res = []
+            endsat = None
             for i in d:
-                var = dict(zip(('problem number', 'problem statment', 'problem name', 'input', 'output'), i))
-                if var['problem number'] == 1:
+                var = dict(zip(('problem number', 'problem statment', 'problem name', 'input', 'output', 'time', 'dur'), i))
+                var['input'] = open(os.path.join('.', 'SubmissionFiles', var['input'])).read()
+                var['output'] = open(os.path.join('.', 'SubmissionFiles', var['output'])).read()
+                if var['problem number'] == int(pno):
+                    endsat = find_endtime(str(var['time']), var['dur'])
                     var["show"] = "show active"
                 else:
                     var["show"] = " "
                 res.append(var)
             # print(res)
-            return (cid, res)
+            return (cid, endsat, res)
         except ms.Error as e:
             print("db error")
             return None
@@ -331,29 +336,6 @@ class userdbop:
             print(e)
             return None
 
-    def submit_the_sheets(self, cid, pno, email, prg, op):
-        '''
-        "cid": 12323,
-        "problem name": "sample-1.jpg",
-        "problem statement": "Infinity Code Wars",
-        "input": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "output": "2018-08-12",
-
-        '''
-        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
-        d = []
-        try:
-            cur = cnx.cursor()
-            stmt = f'INSERT INTO `results`(`competitionsid`, `Email`, `problemid`, `submission`, `Solved`) VALUES ("{cid}","{email}","{pno}","{prg}","{op}")'
-            cur.execute(stmt)
-            cnx.commit()
-        except ms.Error as e:
-            print("db error")
-            return None
-        except TypeError as e:
-            print(e)
-            return None
-
     def is_time_left(self, cid):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         d = []
@@ -383,11 +365,19 @@ class userdbop:
             cur.execute(stmt)
             d = cur.fetchall()
             print(d)
-            if d[0][0] == 0:
-                submit_the_sheets(cid, pno, email, prg, op)
-            else:
-                if op == 1:
+            print("asdasdasd-----#####-")
+            if len(d) != 0:
+                if d[0][0] == 0:
+                    print("better")
                     submit_the_sheets(cid, pno, email, prg, op)
+                else:
+                    if op == 1:
+                        print("better")
+                        submit_the_sheets_updated(cid, pno, email, prg, op)
+            else:
+                print("first one")
+                submit_the_sheets(cid, pno, email, prg, op)
+            print("asdasdasd-----####((((#-")
             # no submiting if the solution in the db is correct and the currently enetred on is incorrect
         except ms.Error as e:
             print(e)
@@ -421,6 +411,54 @@ class userdbop:
             return None
 
 
-user_db = userdbop()
-print(user_db.is_time_left(3))
+def submit_the_sheets(cid, pno, email, prg, op):
+    '''
+    "cid": 12323,
+    "problem name": "sample-1.jpg",
+    "problem statement": "Infinity Code Wars",
+    "input": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+    "output": "2018-08-12",
+
+    '''
+    cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+    d = []
+    try:
+        cur = cnx.cursor(prepared=True)
+        stmt = f'DELETE FROM `results` WHERE `competitionsid` = "{cid}" and `Email` = "{email}" and `problemid` = "{pno}"'
+        cur.execute(stmt)
+        cnx.commit()
+        stmt = f'INSERT INTO `results`(`competitionsid`, `Email`, `problemid`, `submission`, `Solved`) VALUES ("{cid}","{email}","{pno}",%s,{op})'
+        # INSERT INTO `results`(`competitionsid`, `Email`, `problemid`, `submission`, `Solved`, `Submettime`, `Language`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+        cur.execute(stmt, (prg,))
+        cnx.commit()
+    except ms.Error as e:
+        print(e)
+        return None
+    except TypeError as e:
+        print(e)
+        return None
+
+
+def submit_the_sheets_updated(cid, pno, email, prg, op):
+    '''
+    "cid": 12323,
+    "problem name": "sample-1.jpg",
+    "problem statement": "Infinity Code Wars",
+    "input": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+    "output": "2018-08-12",
+
+    '''
+    cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+    d = []
+    try:
+        cur = cnx.cursor(prepared=True)
+        stmt = f'UPDATE `results` SET `submission`= %s,`Solved`="{op}" WHERE `competitionsid`="{cid}",`Email`="{email}",`problemid`="{pno}",")'
+        cur.execute(stmt, (prg,))
+        cnx.commit()
+    except ms.Error as e:
+        print("db error")
+        return None
+    except TypeError as e:
+        print(e)
+        return None
 # user1.registration("admin@gmail.com", "apple", "admin123")

@@ -1,0 +1,3 @@
+l=input()
+print("Hello World")
+print("Hello World")

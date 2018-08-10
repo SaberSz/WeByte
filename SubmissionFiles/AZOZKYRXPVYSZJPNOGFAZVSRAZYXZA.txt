@@ -1,0 +1,14 @@
+from sys import stdout,stdin
+t=int(stdin.readline())
+for i in range(t):
+    n=int(stdin.readline())
+    binary=bin(n)[2:]
+    if '0' in binary:
+        for j in range(len(binary)-1,0,-1):
+            if binary[j]=='0':
+                pos=j
+                break
+        ans=int(binary[:pos]+"1"+binary[pos+1:],2)
+    else:
+        ans=int("1"+binary,2)
+    stdout.write(str(ans)+"\n")

@@ -1,0 +1,13 @@
+from sys import stdin,stdout
+from collections import Counter
+k = ''
+ans = []
+for n in stdin:
+    if(n==k or n==""):
+        ans.append(cnt)
+    else:
+        cnt = str(bin(int(n)).count('1'))
+        ans.append(cnt)
+    k=n
+    
+stdout.write('\n'.join(ans))

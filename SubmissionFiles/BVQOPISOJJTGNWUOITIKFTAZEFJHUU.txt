@@ -1,0 +1,13 @@
+def noofbits(n):
+    sum =0
+    while(n):
+        n = n & (n-1)
+        sum = sum+1
+    return sum
+try:
+    while 1:
+        num = input()
+        print(noofbits(int(num)))
+except EOFError:
+    pass
+  

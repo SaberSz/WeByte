@@ -332,18 +332,19 @@ def prob():
     print("posty")
     if 'username' in session:
         cid = request.args.get('name')
-        print(f'The value of cid is {cid}')
-        user_db = userdbop()
-        username_session = escape(session['username'])
-        cid, resultant1 = user_db.fetch_problem_statments(cid)
-        for i in resultant1:
-            for k in i.items():
-                print(k)
-                print("\n")
-            print("\n\n")
-        pgs = user_db.if_previous_submitted(cid, username_session)
-        return render_template('progs.html',
-                               session_user_name=username_session, results=resultant1, cid=cid, pgs=pgs, getty=True)
+        if not cid is None:
+            print(f'The value of cid is {cid}')
+            user_db = userdbop()
+            username_session = escape(session['username'])
+            cid, endsat, resultant1 = user_db.fetch_problem_statments(cid, 1)
+            for i in resultant1:
+                for k in i.items():
+                    print(k)
+                    print("\n")
+                print("\n\n")
+            pgs = user_db.if_previous_submitted(cid, username_session)
+            return render_template('progs.html',
+                                   session_user_name=username_session, results=resultant1, endsat=endsat, cid=cid, pgs=pgs, getty=1)
     return redirect(url_for('login1'))
 
 
@@ -356,8 +357,8 @@ def prob2():
             prgs = request.form['enterprog']
             cid = request.args.get('cid')
             pno = request.args.get('no')
-            print(f'{pno} and cid={cid}')
-            print(f'program starts here\n{prgs}')
+            # print(f'{pno} and cid={cid}')
+            # print(f'program starts here\n{prgs}')
             # send the program to a function that sees if the answer is right.
             # The program should return Pass or the Error that is generated.
             user_db = userdbop()
@@ -366,27 +367,33 @@ def prob2():
                 prgs_file = convert_to_file(prgs)
                 judgements = judge_me(prgs_file, test_cases)
                 op = {}
-                op["program number"] = pno
+                op["program number"] = int(pno)
                 cnt = 1
                 for i in judgements:
                     op[" Result " + str(cnt)] = i
                     cnt += 1
-                db_op
+                db_op = 0
                 if "NOT PASSED" in judgements:
                     db_op = 0
                 else:
                     db_op = 1
                 username_session = escape(session['username'])
                 # insert into database
+
                 user_db.is_new_version_better(cid, pno, username_session, prgs, db_op)
-                cid, resultant1 = user_db.fetch_problem_statments(cid)
+
+                cid, endsat, resultant1 = user_db.fetch_problem_statments(cid, pno)
+
+                print(f'Just checking \n {prgs} \n {op}')
                 return render_template('progs.html',
                                        session_user_name=username_session,
                                        results=resultant1,
                                        cid=cid,
+                                       endsat=endsat,
+                                       pno=int(pno),
                                        progs=prgs,
                                        op=op,
-                                       getty=False)
+                                       getty=0)
             else:
                 return redirect(url_for('fights'))
     return redirect(url_for('login1'))
