@@ -1,4 +1,3 @@
-import schedule
 import time
 import mysql.connector as ms
 from datetime import date
@@ -10,12 +9,13 @@ def is_day_after_current(string_input_with_date, string_input_with_time, dura):
     pastd = datetime.strptime(string_input_with_date, "%Y-%m-%d")
     pastt = datetime.strptime(string_input_with_time, "%H:%M:%S")
     event_time = pastd + timedelta(hours=pastt.hour + dura, minutes=pastt.minute)
-    print(event_time)
+    # print(event_time)
     present = datetime.now()
     return (event_time <= present)
 
 
 def job():
+    # print("running update db")
     cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
     try:
         cur = cnx.cursor()
@@ -23,23 +23,23 @@ def job():
         stmt = 'Select `Date`, `Time1`, `duration`,`Compid` FROM `competitions` WHERE `Typecmp`=1'
         cur.execute(stmt)
         d = cur.fetchall()
-        print(d)
+        # print(d)
         dur = []
         res = []
         for i in range(len(d)):
-            print("dsfgdfgdf")
+            # print("dsfgdfgdf")
             if is_day_after_current(str(d[i][0]), str(d[i][1]), 3):
                 res.append(d[i][3])
-        print(res)
+        # print(res)
         for i in range(len(res)):
             stmt1 = f'UPDATE `competitions` SET `Typecmp`= 3 WHERE `Compid`= "{res[i]}"'
             cur.execute(stmt1)
             cnx.commit()
             cnx.close()
-        # for i in range(len(res)):
-            # eval_res(res[i])
+        for i in range(len(res)):
+            eval_res(res[i])
             # print(f'{res[i]} updated')
-        print("sdfsdfsfwfewf")
+        # print("done running update db")
 
     except ms.Error as e:
         print(e)
@@ -59,7 +59,7 @@ def eval_res(compid):
         cur.execute(smt)  # no of users
         userdets = cur.fetchall()
         d = dict()
-        finalist = []
+        # finalist = []
         for i in userdets:
             if(d.get(i[0], None)):
                 probm = 0
@@ -96,7 +96,7 @@ def eval_res(compid):
         cur = cnx.cursor(prepared=True)
         for i in d.keys():
             k = d[i]
-            print(k)
+            # print(k)
             smt1 = f'INSERT INTO `resulttrack`(`CompId`, `Email`, `Problem 1`, `Problem 2`, `Problem 3`, `Problem 4`, `Time1`, `Time2`, `Time3`, `Time4`, `Total marks`) VALUES ("{compid}","{i}","{[k[1]][0][0]}","{[k[2]][0][0]}","{[k[3]][0][0]}","{[k[4]][0][0]}",%s,%s,%s,%s,"{[k[1]][0][0]+[k[2]][0][0]+[k[3]][0][0]+[k[4]][0][0]}")'
             cur.execute(smt1, ([k[1]][0][1], [k[2]][0][1], [k[3]][0][1], [k[4]][0][1]))
             cnx.commit()
@@ -106,7 +106,7 @@ def eval_res(compid):
         smt111 = f'SELECT rt.`CompId`,rt.`Email` FROM `resulttrack` rt JOIN (SELECT MAX(rq.`Submettime`) as best,rq.`competitionsid` as cid ,rq.`Email` as em FROM `results` rq GROUP BY rq.`competitionsid`, rq.`Email`) eh ON rt.`CompId`=eh.cid AND rt.`Email`=eh.em WHERE CompId="{compid}" ORDER BY rt.`Total marks` DESC,eh.best ASC'
         cur.execute(smt111)
         rankst = cur.fetchall()
-        print(rankst)
+        # print(rankst)
         count = 1
         for i in rankst:
             srank = f'INSERT INTO `ranks`(`Email`, `Competionid`, `Rank`) VALUES("{i[1]}", "{i[0]}", "{count}")'
@@ -120,12 +120,11 @@ def eval_res(compid):
     except ms.Error as e:
         print(e)
 
+        # schedule.every(1).minutes.do(job)
 
-# schedule.every(1).seconds.do(job)
+        # job()
+        # while True:
+        #     schedule.run_pending()
+        #     time.sleep(1)
 
-job()
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
-
-# SELECT rt.`CompId`,rt.`Email` FROM `resulttrack` rt JOIN (SELECT MAX(rq.`Submettime`) as best,rq.`competitionsid` as cid ,rq.`Email` as em FROM `results` rq GROUP BY rq.`competitionsid`, rq.`Email`) eh ON rt.`CompId`=eh.cid AND rt.`Email`=eh.em WHERE CompId='3' ORDER BY rt.`Total marks` DESC,eh.best ASC
+        # SELECT rt.`CompId`,rt.`Email` FROM `resulttrack` rt JOIN (SELECT MAX(rq.`Submettime`) as best,rq.`competitionsid` as cid ,rq.`Email` as em FROM `results` rq GROUP BY rq.`competitionsid`, rq.`Email`) eh ON rt.`CompId`=eh.cid AND rt.`Email`=eh.em WHERE CompId='3' ORDER BY rt.`Total marks` DESC,eh.best ASC

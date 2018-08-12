@@ -10,19 +10,19 @@ class userdbop:
 
     def logincheck(self, email, pwd):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
-        print(email)
-        print("pwd sent=", pwd)
+        # print(email)
+        # print("pwd sent=", pwd)
         try:
             cur = cnx.cursor()
-            print(f'here is d 1')
+            # print(f'here is d 1')
             # print("ohhhhdwhfhefhewfh")
             # pw_hash = bcrypt.generate_password_hash('frgvsfbfsbvrwrvdf').decode('utf-8')
             # print("hash pass", pw_hash)
             stmt = f'Select `Password` from `users` where `Email` ="{email}" and actives = 1'
             cur.execute(stmt)
-            print(f'here is d 1')
+            # print(f'here is d 1')
             d = cur.fetchall()
-            print(f'here is d {d}')
+            # print(f'here is d {d}')
             if d:
                 t = d[0]
             else:
@@ -32,11 +32,11 @@ class userdbop:
             a = bcrypt.check_password_hash(bytes(t[0], 'utf-8'), pwd)
             return a
         except ms.Error as e:
-            print(e)
+            # print(e)
             return False
 
         except TypeError as e:
-            print(e)
+            # print(e)
             return False
 
     def verifyemail(self, email):
@@ -45,20 +45,20 @@ class userdbop:
             cur = cnx.cursor()
             stmt = f'Select `Password` from `users` where `Email` ="{email}" and actives = 1'
             cur.execute(stmt)
-            print(f'here is d 1')
+            # print(f'here is d 1')
             d = cur.fetchall()
-            print(f'here is d {d}')
+            # print(f'here is d {d}')
             if d:
                 return True
             else:
                 return False
 
         except ms.Error as e:
-            print(e)
+            # print(e)
             return False
 
         except TypeError as e:
-            print(e)
+            # print(e)
             return False
 
     def update_regitration(self, email):
@@ -70,66 +70,65 @@ class userdbop:
             cnx.commit()
             return True
         except ms.Error as e:
-            print(e)
+            # print(e)
             return False
 
         except TypeError as e:
-            print(e)
+            # print(e)
             return False
 
     def registration(self, email, usn, pwd):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
             cur = cnx.cursor()
-            d = []
             u = []
-            p = []
             e = []
-            flu, flp, fle = False, False, False
-            st = f'Select * from `users` where `Username`= "{usn}"'
+            flu, fle = False, False
+            st = f'Select * from `users` where `Email`= "{email}"'
             cur.execute(st)
             u = cur.fetchall()
             if not u:  # if list empty
                 flu = True
-                st1 = f'Select * from `users` where `Email`= "{email}"'
+                st1 = f'Select * from `users` where `Username`= "{usn}"'
                 cur.execute(st1)
                 e = cur.fetchall()
                 if not e:
                     fle = True
-                if flu == True and fle == True:
+                if flu is True and fle is True:
                     z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
-                    stm21t = f'INSERT INTO `users`(`Email`, `Username`, `Password`) VALUES ("{email}","{usn}","{z}")'
-                    cur.execute(stm21t)
+                    cur = cnx.cursor(prepared=True)
+                    stm21t = f'INSERT INTO `users`(`Email`, `Username`, `Password`) VALUES (%s,%s,%s)'
+                    cur.execute(stm21t, (email, usn, z))
                     cnx.commit()
                     return f'Pass'
                 else:
-                    return f'Email'
+                    return f'Username'
 
             else:  # list not empty so user has already registered.
-                return f'Username'
+                return f'Email'
 
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return False
 
         except TypeError as e:
-            print(e)
+            # print(e)
             return False
 
     def contactus(self, name, email, sub, mess):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = cnx.cursor()
-            stmt = f'INSERT INTO `contactus`(`Name`, `Email`, `Subject`, `Message`) VALUES ("{name}","{email}","{sub}","{mess}")'
-            cur.execute(stmt)
+            cur = cnx.cursor(prepared=True)
+            stmt = f'INSERT INTO `contactus`(`Name`, `Email`, `Subject`, `Message`) VALUES (%s,%s,%s,%s)'
+            cur.execute(stmt, (name, email, sub, mess))
             cnx.commit()
             return True
         except ms.Error as e:
-            print(e)
+            # print(e)
             return False
 
         except TypeError as e:
-            print(e)
+            # print(e)
             return False
 
     def fetchupcomingbattles(self):
@@ -157,10 +156,10 @@ class userdbop:
             # print(res)
             return res
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def fetchfinishedbattles(self):
@@ -194,10 +193,10 @@ class userdbop:
             # print(res)
             return res
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def fetchaccountdetailsofuser(self, email):
@@ -209,7 +208,7 @@ class userdbop:
             cur = cnx.cursor()
             stmt1 = f'SELECT `Username`,`joindate` FROM `users` WHERE `Email`="{email}"'
             cur.execute(stmt1)
-            print("d")
+            # print("d")
             d = cur.fetchone()
             if d:
                 dick['name'] = d[0]
@@ -241,7 +240,7 @@ class userdbop:
 
             stmt5 = f'select r.`Language`,count(r.`Language`) as a FROM `results` r WHERE r.`Email`="{email}" GROUP BY r.`Language`ORDER BY a DESC'
             cur.execute(stmt5)
-            print("fifth statement")
+            # print("fifth statement")
             mx = cur.fetchall()
             dick['programming languages used'] = []
             if mx:
@@ -260,13 +259,13 @@ class userdbop:
                 dick['battles'] = battlesfought[0]
             else:
                 dick['battles'] = 0
-            print(dick)
+            # print(dick)
             return dick
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def checkauthenticowner(self, email, pwd):
@@ -282,26 +281,26 @@ class userdbop:
             else:
                 return True
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def makepwdupdate(self, email, pwd):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = cnx.cursor()
+            cur = cnx.cursor(prepared=True)
             z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
-            st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`="{email}"'
-            cur.execute(st)
+            st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`=%s'
+            cur.execute(st, (email))
             cnx.commit()
             return True
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def fetch_problem_statments(self, cid, pno):
@@ -335,10 +334,10 @@ class userdbop:
             # print(res)
             return (cid, endsat, res)
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def fetch_test_cases(self, cid, pn):
@@ -365,13 +364,13 @@ class userdbop:
                 if ".txt" not in var['output'][len(var['output']) - 4:]:
                     var['output'] = convert_to_file(var['output'])
                 res.append(var)
-            print(res)
+            # print(res)
             return res
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def is_time_left(self, cid):
@@ -382,16 +381,16 @@ class userdbop:
             stmt = f'SELECT `Typecmp` FROM `competitions` WHERE `Compid` = "{cid}"'
             cur.execute(stmt)
             d = cur.fetchall()
-            print(d)
+            # print(d)
             if d[0][0] == 0:
                 return False
             if d[0][0] == 1:
                 return True
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def is_new_version_better(self, cid, pno, email, prg, op):
@@ -402,26 +401,26 @@ class userdbop:
             stmt = f'SELECT `Solved` FROM `results` WHERE `competitionsid` = "{cid}" and `Email` = "{email}" and `problemid` = "{pno}"'
             cur.execute(stmt)
             d = cur.fetchall()
-            print(d)
-            print("asdasdasd-----#####-")
+            # print(d)
+            # print("asdasdasd-----#####-")
             if len(d) != 0:
                 if d[0][0] == 0:
-                    print("better")
+                    # print("better")
                     submit_the_sheets(cid, pno, email, prg, op)
                 else:
                     if op == 1:
-                        print("better")
+                        # print("better")
                         submit_the_sheets_updated(cid, pno, email, prg, op)
             else:
-                print("first one")
+                # print("first one")
                 submit_the_sheets(cid, pno, email, prg, op)
-            print("asdasdasd-----####((((#-")
+            # print("asdasdasd-----####((((#-")
             # no submiting if the solution in the db is correct and the currently enetred on is incorrect
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def if_previous_submitted(self, cid, email):
@@ -432,7 +431,7 @@ class userdbop:
             stmt = f'SELECT `problemid`,`submission` FROM `results` WHERE `competitionsid` = "{cid}" and `Email` = "{email}" '
             cur.execute(stmt)
             d = cur.fetchall()
-            print(d)
+            # print(d)
             res = []
             if d:
                 for i in d:
@@ -442,10 +441,10 @@ class userdbop:
                 res = None
             return res
         except ms.Error as e:
-            print(e)
+            # print(e)
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
     def get_ranks(self, cid):
@@ -467,16 +466,16 @@ class userdbop:
             res = []
             cname = None
             for i in d:
-                var = dict(zip(('Comp Name', 'Email', 'Username', 'Rank', 'Problem 1', 'Problem 2 ', 'Problem 3', 'Problem 4', 'Total',), i))
+                var = dict(zip(('Comp Name', 'Email', 'Username', 'Rank', 'Problem 1', 'Problem 2', 'Problem 3', 'Problem 4', 'Total',), i))
                 cname = var['Comp Name']
                 res.append(var)
-            print(res)
+            # print(res)
             return cname, res
         except ms.Error as e:
-            print("db error")
+            # print("db error")
             return None
         except TypeError as e:
-            print(e)
+            # print(e)
             return None
 
 
@@ -501,10 +500,10 @@ def submit_the_sheets(cid, pno, email, prg, op):
         cur.execute(stmt, (prg,))
         cnx.commit()
     except ms.Error as e:
-        print(e)
+        # print(e)
         return None
     except TypeError as e:
-        print(e)
+        # print(e)
         return None
 
 
@@ -525,9 +524,9 @@ def submit_the_sheets_updated(cid, pno, email, prg, op):
         cur.execute(stmt, (prg,))
         cnx.commit()
     except ms.Error as e:
-        print("db error")
+        # print("db error")
         return None
     except TypeError as e:
-        print(e)
+        # print(e)
         return None
 # user1.registration("admin@gmail.com", "apple", "admin123")

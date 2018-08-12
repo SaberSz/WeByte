@@ -1,7 +1,6 @@
 from flask import redirect, url_for, request, render_template, flash, session, escape, abort
 from CodeArena import app
 from datetime import timedelta
-import re
 from CodeArena.db import userdbop
 from CodeArena.CodeUtilities import convert_to_file
 from CodeArena.judge import judge_me
@@ -66,7 +65,7 @@ def activate1():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login2():
-    print(f"\n{session.items()}")
+    # (f"\n{session.items()}")
     if 'times' in session:
         if session['times'] >= 3:
             return redirect(url_for('logout'))
@@ -74,15 +73,15 @@ def login2():
     if request.method == "POST":
         em = request.form['email']
         pw = request.form['password']
-        print(f'{em} and {pw} 1')
+        # print(f'{em} and {pw} 1')
         user_db = userdbop()
         if user_db.logincheck(em, pw):
-            print(f'{em} and {pw} 2')
+            # print(f'{em} and {pw} 2')
             flash(f'Welcome back {em}')
-            print(f'{em} and {pw}')
+            # print(f'{em} and {pw}')
             session['username'] = em
             session['times'] = 0
-            print(f"\n{session.items()}")
+            # print(f"\n{session.items()}")
             next_page = request.args.get('next')
             return redirect(url_for('fights')) if next_page else redirect(url_for('fights'))
 
@@ -96,7 +95,7 @@ def login2():
 def logout():
     session.pop('username', None)
     session.pop('_flashes', None)
-    print(f'{session.items()} present in logout')
+    # print(f'{session.items()} present in logout')
     return redirect(url_for('indexs'))
 
 
@@ -112,7 +111,7 @@ def homesugg():
     error = ""
     try:
         if request.method == "POST":
-            print("\nsdfsadfasdfasdfasdf\n")
+            # print("\nsdfsadfasdfasdfasdf\n")
             name = request.form['conname']
             email = request.form['conmail']
             sub = request.form['consel']
@@ -129,19 +128,6 @@ def homesugg():
         flash(f'Opps! Something went wrong:(')
         flash('Scroll')
         return redirect(url_for('indexs'))
-
-
-usr_details = {
-    "name": "apples",
-    "email": "apples@gmail.com",
-    "golds": 5,
-    "silver": 7,
-    "bronze": 9,
-    "style": "Python",
-    "programming languages used": ["Python"],
-    "Join date": "2018-08-12",
-    "battles": 15
-}
 
 
 @app.route('/acc')
@@ -162,15 +148,15 @@ def accs():
 def accs2():
     error = ""
     if 'times' in session:
-        print("entered 1")
+        # print("entered 1")
         if session['times'] >= 3:
-            print("entered 2")
+            # print("entered 2")
             return redirect(url_for('logout'))
     if 'username' in session:
-        print("entered 3")
+        # print("entered 3")
 
         if request.method == "POST":
-            print("entered 4")
+            # print("entered 4")
             oldpass = request.form['oldpass']
             newpass = request.form['newpass']
             renewpass = request.form['renewpass']
@@ -207,110 +193,17 @@ def accs2():
         return redirect(url_for('logout'))
 
 
-upcoming = [
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Ongoing",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "loft.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Ongoing",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "building.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Upcoming",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Competitive",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Upcoming",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "building.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Upcoming",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    }, {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Upcoming",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    }, {
-        "cid": 12323,
-        "pic": "building.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "up or on": "Upcoming",
-        "duration": "3 hours",
-        "dates": "2018-08-12",
-        "Number of Problems": 4,
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-]
-
-
 @app.route('/fight')
 def fights():
 
     if 'username' in session:
 
         em = escape(session['username'])
-        print(f'the passed value is {em}')
+        # print(f'the passed value is {em}')
         # make call to database and get all upcoming competitions as a list and return the list
         user_db = userdbop()
         upcoming = user_db.fetchupcomingbattles()
-        print(upcoming)
+        # print(upcoming)
         return render_template('compete.html',
                                session_user_name=em,
                                upcoming=upcoming)
@@ -335,18 +228,18 @@ def cre2():
         if pw != pw2:
             flash(f'Password')
             error = "Passwords don't match."
-            print(error)
+            # print(error)
             return redirect(url_for('cre'))
         if not check_pass_strength(pw):
             error = "Weak Password"
             flash(error)
-            print(error)
+            # print(error)
             return redirect(url_for('cre'))
         user_db = userdbop()
         res = user_db.registration(em, name, pw)
-        print(res)
+        # print(res)
         if res == "Pass":
-            print(f' inside {em} and {pw}\n {name} and {pw2}')
+            # print(f' inside {em} and {pw}\n {name} and {pw2}')
             subject = "Confirm your email"
             token = ts.dumps({'user_id': em}).decode('utf-8')
             confirm_url = url_for(
@@ -364,10 +257,10 @@ def cre2():
             return redirect(url_for("indexs"))
             # return redirect(url_for('fights'))
         elif res == "Username":
-            print("Username")
+            # print("Username")
             flash(f'Username')
         elif res == "Email":
-            print("Email")
+            # print("Email")
             flash(f'Email')
 
         return redirect(url_for('cre'))
@@ -388,19 +281,14 @@ def confirm_email(token):
 
 @app.route('/problem')
 def prob():
-    print("posty")
+    # print("posty")
     if 'username' in session:
         cid = request.args.get('name')
         if not cid is None:
-            print(f'The value of cid is {cid}')
+            # print(f'The value of cid is {cid}')
             user_db = userdbop()
             username_session = escape(session['username'])
             cid, endsat, resultant1 = user_db.fetch_problem_statments(cid, 1)
-            for i in resultant1:
-                for k in i.items():
-                    print(k)
-                    print("\n")
-                print("\n\n")
             pgs = user_db.if_previous_submitted(cid, username_session)
             return render_template('progs.html',
                                    session_user_name=username_session, results=resultant1, endsat=endsat, cid=cid, pgs=pgs, getty=1)
@@ -409,10 +297,10 @@ def prob():
 
 @app.route('/problem', methods=['GET', 'POST'])
 def prob2():
-    print("posty")
+    # print("posty")
     if 'username' in session:
         if request.method == "POST":
-            print("posty")
+            # print("posty")
             prgs = request.form['enterprog']
             cid = request.args.get('cid')
             pno = request.args.get('no')
@@ -443,7 +331,7 @@ def prob2():
 
                 cid, endsat, resultant1 = user_db.fetch_problem_statments(cid, pno)
 
-                print(f'Just checking \n {prgs} \n {op}')
+                # print(f'Just checking \n {prgs} \n {op}')
                 return render_template('progs.html',
                                        session_user_name=username_session,
                                        results=resultant1,
@@ -456,50 +344,6 @@ def prob2():
             else:
                 return redirect(url_for('fights'))
     return redirect(url_for('login1'))
-
-
-resultant = [
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "dates": "2018-08-12",
-        "Type of Comp": "Competitive",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "dates": "2018-08-12",
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "dates": "2018-08-12",
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-    {
-        "cid": 12323,
-        "pic": "sample-1.jpg",
-        "name": "Infinity Code Wars",
-        "des": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
-        "dates": "2018-08-12",
-        "Type of Comp": "Hiring",
-        "times": "20:00:00",
-        "org": "Cognizant"
-    },
-]
 
 
 @app.route('/results')
