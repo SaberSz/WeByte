@@ -38,7 +38,7 @@ $ python run.py
 ## Built With
 * [Python](https://www.python.org/) - The programming languaged used.
 * [Flask](http://flask.pocoo.org/) - Used as a Web Framework.
-* [Bootstrp](https://getbootstrap.com/) - Used for designing webpage elements.
+* [Bootstrap](https://getbootstrap.com/) - Used for designing webpage elements.
 
 ## Authors 
 * [Dylan Saldanha](https://github.com/SaberSz)
