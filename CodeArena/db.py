@@ -2,7 +2,7 @@
    verify email and pwd'''
 from CodeArena import bcrypt
 import mysql.connector as ms
-from CodeArena.CodeUtilities import convert_to_file, find_endtime
+from CodeArena.CodeUtilities import convert_to_file, get_countdown_time
 import os
 
 
@@ -326,7 +326,7 @@ class userdbop:
                 var['input'] = open(os.path.join('.', 'SubmissionFiles', var['input'])).read()
                 var['output'] = open(os.path.join('.', 'SubmissionFiles', var['output'])).read()
                 if var['problem number'] == int(pno):
-                    endsat = find_endtime(str(var['time']), var['dur'])
+                    endsat = get_countdown_time(str(var['time']), var['dur'])
                     var["show"] = "show active"
                 else:
                     var["show"] = " "
