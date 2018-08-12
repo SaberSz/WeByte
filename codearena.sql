@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 11, 2018 at 04:17 AM
+-- Generation Time: Aug 12, 2018 at 12:21 PM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.2.1
 
@@ -49,10 +49,15 @@ CREATE TABLE `competitions` (
 --
 
 INSERT INTO `competitions` (`Compid`, `cName`, `Typecmp`, `Des`, `imgs`, `duration`, `Date`, `Time1`, `horc`, `Org`) VALUES
-('1', 'August Circuits', 2, 'We are conducting a marathon competitive programming challenge August Circuits starting from 17th August 2018. The objective of August Circuits is to challenge the talented and creative minds in competitive programming with some interesting algorithmic problems.', 'sample-1.jpg', '3 hours', '2018-08-17', '05:00:00', 0, 'IBM'),
+('1', 'August Circuits', 2, 'We are conducting a marathon competitive programming challenge August Circuits starting from 17th August 2018. The objective of August Circuits is to challenge the talented and creative minds in competitive programming with some interesting algorithmic problems.', 'sample-1.jpg', '3 hours', '2018-08-17', '05:00:00', 1, 'IBM'),
 ('2', 'June easy', 0, 'We are running a short 3 hour contest on 1st June. There will be 6 algorithmic problems, for beginners in competitive coding. This contest is a Rated contest and open for all.', 'desk.jpg', '3 hours', '2018-06-01', '05:25:34', 0, 'WeByte'),
-('3', 'August easy', 1, 'You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.', 'loft.jpg', '3 hours', '2018-08-31', '23:00:00', 1, 'Infosys'),
-('4', 'Winds of Winter', 2, 'The Winds of Winter will take readers farther north than any of the previous books, and the Others will appear in the book.', 'sample-1.jpg', '3 hours', '2018-12-15', '05:00:00', 0, 'HBO');
+('3', 'August Easy', 0, 'You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.', 'loft.jpg', '3 hours', '2018-08-12', '13:10:00', 1, 'Infosys'),
+('4', 'Winds of Winter', 2, 'The Winds of Winter will take readers farther north than any of the previous books, and the Others will appear in the book.', 'sample-1.jpg', '3 hours', '2018-12-15', '05:00:00', 0, 'HBO'),
+('5', 'September Codethon', 2, 'We are conducting a marathon competitive programming challenge August Circuits starting from 17th August 2018. The objective of August Circuits is to challenge the talented and creative minds in competitive programming with some interesting algorithmic problems.', 'sample-1.jpg', '3 hours', '2018-09-17', '05:00:00', 1, 'IBM'),
+('6', 'January easy', 0, 'We are running a short 3 hour contest on 1st January. There will be 6 algorithmic problems, for beginners in competitive coding. This contest is a Rated contest and open for all.', 'desk.jpg', '3 hours', '2018-01-01', '05:25:34', 1, 'WeByte'),
+('7', 'Dance of Dragons', 2, 'The Dance of Dragons will take readers farther north than any of the previous books, and the Others will appear in the book.', 'sample-1.jpg', '3 hours', '2018-11-01', '05:00:00', 0, 'HBO'),
+('8', 'October Easy', 2, 'We are conducting a marathon competitive programming challenge August Circuits starting from 17th August 2018. The objective of August Circuits is to challenge the talented and creative minds in competitive programming with some interesting algorithmic problems.', 'sample-1.jpg', '3 hours', '2018-10-17', '05:00:00', 1, 'Mphasis'),
+('9', 'February easy', 0, 'We are running a short 3 hour contest on 1st february. There will be 6 algorithmic problems, for beginners in competitive coding. This contest is a Rated contest and open for all.', 'desk.jpg', '3 hours', '2018-02-01', '05:25:34', 0, 'WeByte');
 
 -- --------------------------------------------------------
 
@@ -136,6 +141,15 @@ CREATE TABLE `ranks` (
   `Rank` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ranks`
+--
+
+INSERT INTO `ranks` (`Email`, `Competionid`, `Rank`) VALUES
+('bubs@bubs.com', '3', 3),
+('dylaniansld@gmail.com', '3', 1),
+('qwerty@qwerty.com', '3', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -161,6 +175,8 @@ INSERT INTO `results` (`competitionsid`, `Email`, `problemid`, `submission`, `So
 ('3', 'bubs@bubs.com', 1, 'def noofbits(n):\r\n    sum =0\r\n    while(n):\r\n        n = n & (n-1)\r\n        sum = sum+1\r\n    return sum\r\ntry:\r\n    while 1:\r\n        num = input()\r\n        print(noofbits(int(num)))\r\nexcept EOFError:\r\n    pass', 0, '2018-08-10 04:29:59', 'Python'),
 ('3', 'bubs@bubs.com', 2, 'def noofbits(n):\r\n    sum =0\r\n    while(n):\r\n        n = n & (n-1)\r\n        sum = sum+1\r\n    return sum\r\ntry:\r\n    while 1:\r\n        num = input()\r\n        print(noofbits(int(num)))\r\nexcept EOFError:\r\n    pass        ', 0, '2018-08-10 04:30:16', 'Python'),
 ('3', 'bubs@bubs.com', 3, 'def noofbits(n):\r\n    sum =0\r\n    while(n):\r\n        n = n & (n-1)\r\n        sum = sum+1\r\n    return sum\r\ntry:\r\n    while 1:\r\n        num = input()\r\n        print(noofbits(int(num)))\r\nexcept EOFError:\r\n    pass                    ', 0, '2018-08-10 04:30:38', 'Python'),
+('3', 'dylaniansld@gmail.com', 3, 'from sys import stdout,stdin\r\nt=int(stdin.readline())\r\nfor i in range(t):\r\n    n=int(stdin.readline())\r\n    binary=bin(n)[2:]\r\n    if \'0\' in binary:\r\n        for j in range(len(binary)-1,0,-1):\r\n            if binary[j]==\'0\':\r\n                pos=j\r\n                break\r\n        ans=int(binary[:pos]+\"1\"+binary[pos+1:],2)\r\n    else:\r\n        ans=int(\"1\"+binary,2)\r\n    stdout.write(str(ans)+\"\\n\")', 1, '2018-08-12 10:37:21', 'Python'),
+('3', 'dylaniansld@gmail.com', 4, 'def ans():\r\n    for _ in range(int(input())):\r\n        input()\r\n        yield input().count(\"0\")\r\nprint(*ans(), sep=\"\\n\")', 1, '2018-08-12 10:38:05', 'Python'),
 ('3', 'qwerty@qwerty.com', 1, 'def noofbits(n):\r\n    sum =0\r\n    while(n):\r\n        n = n & (n-1)\r\n        sum = sum+1\r\n    return sum\r\ntry:\r\n    while 1:\r\n        num = input()\r\n        print(noofbits(int(num)))\r\nexcept EOFError:\r\n    pass\r\n ', 0, '2018-08-10 09:09:35', 'Python'),
 ('3', 'qwerty@qwerty.com', 2, '\r\n\r\n\r\n\r\n    \r\n\r\n    \r\n\r\ndef noofbits(n):\r\n    sum =0\r\n    while(n):\r\n        n = n & (n-1)\r\n        sum = sum+1\r\n    return sum\r\ntry:\r\n    while 1:\r\n        num = input()\r\n        print(noofbits(int(num)))\r\nexcept EOFError:\r\n    pass\r\n    \r\n\r\n\r\n\r\n    \r\n\r\n\r\n                            \r\n    \r\n\r\n\r\n                            ', 0, '2018-08-10 06:59:37', 'Python'),
 ('3', 'qwerty@qwerty.com', 3, '\r\n\r\n\r\n\r\n\r\nfrom sys import stdout,stdin\r\nt=int(stdin.readline())\r\nfor i in range(t):\r\n    n=int(stdin.readline())\r\n    binary=bin(n)[2:]\r\n    if \'0\' in binary:\r\n        for j in range(len(binary)-1,0,-1):\r\n            if binary[j]==\'0\':\r\n                pos=j\r\n                break\r\n        ans=int(binary[:pos]+\"1\"+binary[pos+1:],2)\r\n    else:\r\n        ans=int(\"1\"+binary,2)\r\n    stdout.write(str(ans)+\"\\n\")\r\n    \r\n\r\n\r\n                            \r\n    \r\n\r\n\r\n                            \r\n    \r\n\r\n\r\n                            \r\n    \r\n\r\n\r\n                            \r\n    \r\n\r\n\r\n                            ', 1, '2018-08-10 09:59:05', 'Python');
@@ -186,6 +202,15 @@ CREATE TABLE `resulttrack` (
   `Total marks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `resulttrack`
+--
+
+INSERT INTO `resulttrack` (`CompId`, `Email`, `Problem 1`, `Problem 2`, `Problem 3`, `Problem 4`, `Time1`, `Time2`, `Time3`, `Time4`, `Total marks`) VALUES
+('3', 'bubs@bubs.com', 0, 0, 0, 0, '2018-08-10 04:29:59', '2018-08-10 04:30:16', '2018-08-10 04:30:38', '0000-00-00 00:00:00', 0),
+('3', 'dylaniansld@gmail.com', 0, 0, 90, 100, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2018-08-12 10:37:21', '2018-08-12 10:38:05', 190),
+('3', 'qwerty@qwerty.com', 0, 0, 90, 0, '2018-08-10 09:09:35', '2018-08-10 06:59:37', '2018-08-10 09:59:05', '0000-00-00 00:00:00', 90);
+
 -- --------------------------------------------------------
 
 --
@@ -210,7 +235,7 @@ INSERT INTO `users` (`Email`, `Username`, `Password`, `joindate`, `actives`) VAL
 ('admin@gmail.com', 'apple', '$2b$12$jF0Wqvs0eS0bAxeNFHSpquh8vo/Zh87rJo/4eOzZPzieoBJEzVY7W', '2018-08-09 04:30:25', 0),
 ('blueadmin@gmail.com', 'blueapple', '$2b$12$tScfwJYVNlEz4m0qwuJUsujLnr2.pgyVVc7BKtH.9fIIf39W7bN9S', '2018-08-09 04:34:04', 0),
 ('bubs@bubs.com', 'bubs', '$2b$12$l81YdYJdHGaPuZ0Z.7pgUOBk3tXD/ykPoZn/Rk.8Xo2LNAQSU3N2O', '2018-08-10 09:58:42', 0),
-('dylaniansld@gmail.com', 'DylanSaldanha', '$2b$12$nVv3gOxjXq2xTrtq8iD1POU2/lvoDy19lhpKE.xYiOs5efj8rV4vG', '2018-08-11 04:22:51', 1),
+('dylaniansld@gmail.com', 'DylanSaldanha', '$2b$12$DylLqtbnM.HTyA9DzyJCm.ViC/VeVb7GA23KA6k/B1nbEAhtrnq6m', '2018-08-12 15:52:56', 1),
 ('dylansaldanha@hotmail.com', 'Dylan', '$2b$12$jr5hurcwGdpjNhnfMA7FL.bKTm1LqP8DZ972gzOLEH6m8Ak1QBHoq', '2018-08-09 10:23:43', 0),
 ('greenadmin@gmail.com', 'greenapple', '$2b$12$f5aQdXw85Gr9.5r2WYEYM..HDM7SM4OEgJETO3xf.IcsC1/xz0jQK', '2018-08-09 04:32:49', 0),
 ('qweradmin@gmail.com', 'qwerapple', '$2b$12$olllkO802fvqjYCXXoKETuNykFkB5uaGJcCa48ltm7kvECNL3TWjm', '2018-08-09 04:36:35', 0),
