@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 10, 2018 at 10:51 AM
+-- Generation Time: Aug 11, 2018 at 04:17 AM
 -- Server version: 5.6.34-log
 -- PHP Version: 7.2.1
 
@@ -197,22 +197,24 @@ CREATE TABLE `users` (
   `Email` varchar(60) NOT NULL,
   `Username` varchar(50) NOT NULL,
   `Password` varchar(60) NOT NULL,
-  `joindate` datetime DEFAULT CURRENT_TIMESTAMP
+  `joindate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `actives` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 for false 1 for true'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`Email`, `Username`, `Password`, `joindate`) VALUES
-('abhi', 'fwfefq', 'fvrwbvrwrw', '2018-08-09 02:12:02'),
-('admin@gmail.com', 'apple', '$2b$12$jF0Wqvs0eS0bAxeNFHSpquh8vo/Zh87rJo/4eOzZPzieoBJEzVY7W', '2018-08-09 04:30:25'),
-('blueadmin@gmail.com', 'blueapple', '$2b$12$tScfwJYVNlEz4m0qwuJUsujLnr2.pgyVVc7BKtH.9fIIf39W7bN9S', '2018-08-09 04:34:04'),
-('bubs@bubs.com', 'bubs', '$2b$12$l81YdYJdHGaPuZ0Z.7pgUOBk3tXD/ykPoZn/Rk.8Xo2LNAQSU3N2O', '2018-08-10 09:58:42'),
-('dylansaldanha@hotmail.com', 'Dylan', '$2b$12$jr5hurcwGdpjNhnfMA7FL.bKTm1LqP8DZ972gzOLEH6m8Ak1QBHoq', '2018-08-09 10:23:43'),
-('greenadmin@gmail.com', 'greenapple', '$2b$12$f5aQdXw85Gr9.5r2WYEYM..HDM7SM4OEgJETO3xf.IcsC1/xz0jQK', '2018-08-09 04:32:49'),
-('qweradmin@gmail.com', 'qwerapple', '$2b$12$olllkO802fvqjYCXXoKETuNykFkB5uaGJcCa48ltm7kvECNL3TWjm', '2018-08-09 04:36:35'),
-('qwerty@qwerty.com', 'qwerty', '$2b$12$2EVWeXAWKdPRhoQ0GvZgLeWE0PeEtq79jf01rxEynbA0HBIZiYSCO', '2018-08-09 13:23:59');
+INSERT INTO `users` (`Email`, `Username`, `Password`, `joindate`, `actives`) VALUES
+('abhi', 'fwfefq', 'fvrwbvrwrw', '2018-08-09 02:12:02', 0),
+('admin@gmail.com', 'apple', '$2b$12$jF0Wqvs0eS0bAxeNFHSpquh8vo/Zh87rJo/4eOzZPzieoBJEzVY7W', '2018-08-09 04:30:25', 0),
+('blueadmin@gmail.com', 'blueapple', '$2b$12$tScfwJYVNlEz4m0qwuJUsujLnr2.pgyVVc7BKtH.9fIIf39W7bN9S', '2018-08-09 04:34:04', 0),
+('bubs@bubs.com', 'bubs', '$2b$12$l81YdYJdHGaPuZ0Z.7pgUOBk3tXD/ykPoZn/Rk.8Xo2LNAQSU3N2O', '2018-08-10 09:58:42', 0),
+('dylaniansld@gmail.com', 'DylanSaldanha', '$2b$12$nVv3gOxjXq2xTrtq8iD1POU2/lvoDy19lhpKE.xYiOs5efj8rV4vG', '2018-08-11 04:22:51', 1),
+('dylansaldanha@hotmail.com', 'Dylan', '$2b$12$jr5hurcwGdpjNhnfMA7FL.bKTm1LqP8DZ972gzOLEH6m8Ak1QBHoq', '2018-08-09 10:23:43', 0),
+('greenadmin@gmail.com', 'greenapple', '$2b$12$f5aQdXw85Gr9.5r2WYEYM..HDM7SM4OEgJETO3xf.IcsC1/xz0jQK', '2018-08-09 04:32:49', 0),
+('qweradmin@gmail.com', 'qwerapple', '$2b$12$olllkO802fvqjYCXXoKETuNykFkB5uaGJcCa48ltm7kvECNL3TWjm', '2018-08-09 04:36:35', 0),
+('qwerty@qwerty.com', 'qwerty', '$2b$12$2EVWeXAWKdPRhoQ0GvZgLeWE0PeEtq79jf01rxEynbA0HBIZiYSCO', '2018-08-09 13:23:59', 0);
 
 --
 -- Indexes for dumped tables

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="static/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="static/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,600">
+    <link rel="stylesheet" href="static/css/AXY-Contact-Us.css">
+    <link rel="stylesheet" href="static/css/AXY-Contact-Us1.css">
+    <link rel="stylesheet" href="static/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="static/css/copyright-sss.css">
+    <link rel="stylesheet" href="static/css/copyright-sss1.css">
+    <link rel="stylesheet" href="static/css/Data-Table.css">
+    <link rel="stylesheet" href="static/css/Data-Table2.css">
+    <link rel="stylesheet" href="static/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="static/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="static/css/Projects-Clean.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/Team-Boxed.css">
+    <link rel="stylesheet" href="static/css/Team-with-rotating-cards.css">
+</head>
+
+<body>
+    <div class="login-dark" style="background-image:url(&quot;static/img/stars-3840x2160-galaxy-4k-6362.jpg&quot;);background-size:cover;background-repeat:no-repeat;width:100%;height:100vh;">
+        {% if cho == 0 %}
+            <form method="post" action="{{url_for('activate1',co='mails')}}" style="background-color:rgba(33,33,33,0.77);">
+            <h2 class="sr-only">Reset Password Form</h2>
+            <div data-aos="zoom-in" data-aos-duration="700" data-aos-once="true" class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" required="" placeholder="Email" autofocus=""  style="font-family:Montserrat, sans-serif;">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Email Error" in messages %}
+                        {% for message in messages %}
+
+                            <small class="form-text text-danger">No such account exists</small></div>
+
+                        {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endwith %}
+    <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="font-family:Montserrat, sans-serif;">Submit Email</button></div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Email Success" in messages %}
+                        {% for message in messages %}
+
+                            <small class="form-text text-success">Please check your email and follow the instructions given.</small></div>
+
+                        {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endwith %}
+        {% endif %}
+        {% if cho ==1 %}
+        <form method="post" action="{{url_for('activate1',co='passes')}}" style="background-color:rgba(33,33,33,0.77);">
+            <h2 class="sr-only">Login Form</h2>
+            <div data-aos="zoom-in" data-aos-duration="700" data-aos-once="true" class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" required="" placeholder="New Password" autofocus=""  style="font-family:Montserrat, sans-serif;">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Match" in messages %}
+                        {% for message in messages %}
+
+                            <small class="form-text text-danger">The passwords don't seem to match</small></div>
+
+                        {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endwith %}
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% if "Weak" in messages %}
+                        {% for message in messages %}
+
+                            <small class="form-text text-danger">Weak Password</small></div>
+
+                        {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endwith %}
+            <div
+                class="form-group"><input class="form-control" type="password" name="repassword" required="" placeholder="Re-enter New Password" style="font-family:Montserrat, sans-serif;"></div>
+        }
+    <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="font-family:Montserrat, sans-serif;">Reset Password</button></div>
+    </form>
+    {% endif %}
+    </div>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="static/js/bs-animation.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+    <script src="static/js/image-card-materialize.js"></script>
+</body>
+
+</html>

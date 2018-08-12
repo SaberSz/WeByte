@@ -1,10 +1,12 @@
-from flask import redirect, url_for, request, render_template, flash, session, escape
+from flask import redirect, url_for, request, render_template, flash, session, escape, abort
 from CodeArena import app
 from datetime import timedelta
 import re
 from CodeArena.db import userdbop
 from CodeArena.CodeUtilities import convert_to_file
 from CodeArena.judge import judge_me
+from CodeArena.security import ts, send_mail, send_mail_content, check_pass_strength
+import secrets
 
 
 @app.before_request
@@ -22,6 +24,44 @@ def make_session_permanent():
 def login1():
     error = ""
     return render_template("login.html")
+
+
+@app.route('/activate')
+def activate():
+    error = ""
+    return render_template("activate.html", cho=0)
+
+
+@app.route('/activate', methods=['GET', 'POST'])
+def activate1():
+    error = ""
+    if request.method == "POST":
+        if request.args.get('co') == "mails":
+            user_db = userdbop()
+            email = request.form['email']
+            if user_db.verifyemail(email):
+                flash("Email Success")
+                sks = secrets.token_hex(20)
+                subject = "Forgotten Password"
+                content = f'''
+                We have generated a secure paswword for you. You can login and change the password if you desire
+
+                PASSWORD : {sks}
+                '''
+                send_mail_content(email, subject, content)
+                user_db.makepwdupdate(email, sks)
+            else:
+                flash("Email Error")
+
+    return render_template("activate.html", cho=0)
+
+
+# @app.route('/forgotpass')
+# def forgotpass():
+#     error = ""
+#     print("Forgotten")
+#     flash("ForgotPass")
+#     return render_template("activate.html", cho=0)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -142,7 +182,7 @@ def accs2():
                 # print(f'{em} and {pw}')
                 # function that returns true or false with old pass and email
                 #
-                if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', newpass):
+                if not check_pass_strength(newpass):
                     error = "Weak Password"
                     flash(error)
                     return render_template("acc.html", title="Login", dets=usr_details)
@@ -292,31 +332,37 @@ def cre2():
         em = request.form['email']
         pw = request.form['password']
         pw2 = request.form['confirm_password']
-        print(f'{em} and {pw}\n {name} and {pw2}')
-        # if em == "admin" and pw == "admin":
-        #     print(f'{em} and {pw}')
-        #     flash(f'Welcome back {user}')
-        #     print(f'{em} and {pw}')
-        #     return redirect(url_for('compete'))
-        # else:
-        #     error = "Error"
-        #     flash(error)
-        #     return render_template("login.html", title="Login", error=error)
         if pw != pw2:
             flash(f'Password')
             error = "Passwords don't match."
             print(error)
             return redirect(url_for('cre'))
-        if not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', pw):
+        if not check_pass_strength(pw):
             error = "Weak Password"
             flash(error)
             print(error)
             return redirect(url_for('cre'))
         user_db = userdbop()
         res = user_db.registration(em, name, pw)
+        print(res)
         if res == "Pass":
             print(f' inside {em} and {pw}\n {name} and {pw2}')
-            return redirect(url_for('fights'))
+            subject = "Confirm your email"
+            token = ts.dumps({'user_id': em}).decode('utf-8')
+            confirm_url = url_for(
+                'confirm_email',
+                token=token,
+                _external=True)
+
+            html = url_for(
+                'confirm_email',
+                confirm_url=confirm_url, token=token, _external=True)
+
+            # We'll assume that send_email has been defined in myapp/util.py
+            send_mail(em, subject, html)
+
+            return redirect(url_for("indexs"))
+            # return redirect(url_for('fights'))
         elif res == "Username":
             print("Username")
             flash(f'Username')
@@ -325,6 +371,19 @@ def cre2():
             flash(f'Email')
 
         return redirect(url_for('cre'))
+
+
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        email = ts.loads(token)['user_id']
+    except:
+        abort(404)
+    user_db = userdbop()
+    if not user_db.update_regitration(email):
+        abort(404)
+
+    return redirect(url_for('login1'))
 
 
 @app.route('/problem')
@@ -459,8 +518,10 @@ def rs():
 def rst():
     if 'username' in session:
         user_db = userdbop()
+        cid = request.args.get('name')
+        cname, res = user_db.get_ranks(cid)
         username_session = escape(session['username'])
-        return render_template('resultstab.html', session_user_name=username_session)
+        return render_template('resultstab.html', em=username_session, res=res, cname=cname)
     return redirect(url_for('login1'))
 
 # @app.route('/home', methods=['POST'])

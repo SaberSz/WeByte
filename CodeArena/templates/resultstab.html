@@ -50,7 +50,7 @@
             </div>
         </nav>
     </section>
-    <h2 class="text-center" data-aos="fade-up" data-aos-duration="700" style="font-family:Montserrat, sans-serif;padding:20px;">ABC Competition Results</h2>
+    <h2 class="text-center" data-aos="fade-up" data-aos-duration="700" style="font-family:Montserrat, sans-serif;padding:20px;">{{cname }} Results</h2>
     <section data-aos="fade-up" data-aos-duration="700" data-aos-once="true">
         <div>
             <div class="container" style="margin-bottom:30px;"><table id="example" class="table tabsinres" cellspacing="0" width="100%">
@@ -63,115 +63,37 @@
                 <th class="reshead">Problem 3</th>
                 <th class="reshead">Problem 4</th>
                 <th class="reshead">Final Score</th>
-                <th class="reshead">Total Time</th>
+                <!-- <th class="reshead">Total Time</th> -->
             </tr>
         </thead>
         <tbody>
+            {%  for me in res %}
+                {% if me['Email'] == em %}
+<tr class="resme">
+                {% elif me['Rank'] == 1 %}
             <tr class="restops">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
-            <tr class="restops2">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
-            <tr class="restops3">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
-            <tr class="resme">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
+                {% elif me['Rank'] == 2 %}
+<tr class="restops2">
+                {% elif me['Rank'] == 3 %}
+<tr class="restops3">
+                {% else %}
 
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
+ <tr class="resnormal">
+                {% endif %}
+                <td>{{me['Rank']}}</td>
+                <td>{{me['Username']}}</td>
+                <td>{{me['Problem 1']}}</td>
+                <td>{{me['Problem 2']}}</td>
+                <td>{{me['Problem 3']}}</td>
+                <td>{{me['Problem 4']}}</td>
+                <td>{{me['Total']}}</td>
+                <!-- <td>2:50:40</td> -->
             </tr>
+            {% endfor %}
 
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
 
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
 
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
 
-            <tr class="resnormal">
-                <td>1</td>
-                <td>System Architect</td>
-                <td>98</td>
-                <td>61</td>
-                <td>98</td>
-                <td>78</td>
-                <td>264</td>
-                <td>2:50:40</td>
-            </tr>
         </tbody>
     </table></div>
         </div>

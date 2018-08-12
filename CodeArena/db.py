@@ -18,7 +18,7 @@ class userdbop:
             # print("ohhhhdwhfhefhewfh")
             # pw_hash = bcrypt.generate_password_hash('frgvsfbfsbvrwrvdf').decode('utf-8')
             # print("hash pass", pw_hash)
-            stmt = f'Select `Password` from `users` where `Email` ="{email}"'
+            stmt = f'Select `Password` from `users` where `Email` ="{email}" and actives = 1'
             cur.execute(stmt)
             print(f'here is d 1')
             d = cur.fetchall()
@@ -32,7 +32,45 @@ class userdbop:
             a = bcrypt.check_password_hash(bytes(t[0], 'utf-8'), pwd)
             return a
         except ms.Error as e:
-            print("db error")
+            print(e)
+            return False
+
+        except TypeError as e:
+            print(e)
+            return False
+
+    def verifyemail(self, email):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+        try:
+            cur = cnx.cursor()
+            stmt = f'Select `Password` from `users` where `Email` ="{email}" and actives = 1'
+            cur.execute(stmt)
+            print(f'here is d 1')
+            d = cur.fetchall()
+            print(f'here is d {d}')
+            if d:
+                return True
+            else:
+                return False
+
+        except ms.Error as e:
+            print(e)
+            return False
+
+        except TypeError as e:
+            print(e)
+            return False
+
+    def update_regitration(self, email):
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+        try:
+            cur = cnx.cursor()
+            st = f'UPDATE `users` SET actives= 1 WHERE `Email`="{email}"'
+            cur.execute(st)
+            cnx.commit()
+            return True
+        except ms.Error as e:
+            print(e)
             return False
 
         except TypeError as e:
@@ -405,6 +443,37 @@ class userdbop:
             return res
         except ms.Error as e:
             print(e)
+            return None
+        except TypeError as e:
+            print(e)
+            return None
+
+    def get_ranks(self, cid):
+        '''
+        "cid": 12323,
+        "problem name": "sample-1.jpg",
+        "problem statement": "Infinity Code Wars",
+        "input": "You can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.",
+        "output": "2018-08-12",
+
+        '''
+        cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+        d = []
+        try:
+            cur = cnx.cursor()
+            stmt = f'SELECT g.cName,k.Email ,k.Username, r.`Rank`, s.`Problem 1`, s.`Problem 2` , s.`Problem 3` , s.`Problem 4` , s.`Total marks` FROM `ranks` r JOIN resulttrack s on r.`Email`=s.Email and r.`Competionid` = s.CompId join users k on k.Email=s.Email join competitions g on g.Compid=s.CompId  WHERE r.`Competionid` = "{cid}" ORDER BY r.`Rank` ASC'
+            cur.execute(stmt)
+            d = cur.fetchall()
+            res = []
+            cname = None
+            for i in d:
+                var = dict(zip(('Comp Name', 'Email', 'Username', 'Rank', 'Problem 1', 'Problem 2 ', 'Problem 3', 'Problem 4', 'Total',), i))
+                cname = var['Comp Name']
+                res.append(var)
+            print(res)
+            return cname, res
+        except ms.Error as e:
+            print("db error")
             return None
         except TypeError as e:
             print(e)
