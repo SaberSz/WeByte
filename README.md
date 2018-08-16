@@ -2,7 +2,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 WeByte is a programming colosseum that allows programmers to battle against other programmers in competitive programming contests. 
-This flask based website can be used by individual who wishes to host a competitive coding event in one's locality, school, college or university. Companies can also host this website on their servers and use it for competitive coding tests for hiring purposes.
+This Flask based website can be used by an individual who wishes to host a competitive coding event in one's locality, school, college or university. Companies can also host this website on their servers and use it for competitive coding tests for hiring purposes, instead of using a middleman to conduct the tests.
 
 ## Features
 * Webpages designed to be user friendly and intuitive.
