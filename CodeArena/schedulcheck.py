@@ -14,6 +14,32 @@ def is_day_after_current(string_input_with_date, string_input_with_time, dura):
     return (event_time <= present)
 
 
+def job2():
+    cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
+    try:
+        cur = cnx.cursor()
+        res = []
+        stmt = 'Select `Date`, `Time1`,`Compid` FROM `competitions` WHERE `Typecmp`=2'
+        cur.execute(stmt)
+        d = cur.fetchall()
+        for i in range(len(d)):
+            # print("dsfgdfgdf")
+            if is_day_after_current(str(d[i][0]), str(d[i][1]), 0):
+                res.append(d[i][2])
+        # print(res)
+        for i in range(len(res)):
+            stmt1 = f'UPDATE `competitions` SET `Typecmp`= 1 WHERE `Compid`= "{res[i]}"'
+            cur.execute(stmt1)
+            cnx.commit()
+        cnx.close()
+        # print(f'{res[i]} updated')
+        # print("done running update db")
+
+    except ms.Error as e:
+        print("bub")
+        print(e)
+
+
 def job():
     # print("running update db")
     cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
@@ -35,12 +61,12 @@ def job():
             stmt1 = f'UPDATE `competitions` SET `Typecmp`= 3 WHERE `Compid`= "{res[i]}"'
             cur.execute(stmt1)
             cnx.commit()
-            cnx.close()
+        cnx.close()
         for i in range(len(res)):
             eval_res(res[i])
             # print(f'{res[i]} updated')
         # print("done running update db")
-
+        job2()
     except ms.Error as e:
         print(e)
 

@@ -290,17 +290,17 @@ class userdbop:
     def makepwdupdate(self, email, pwd):
         cnx = ms.connect(unix_socket='/Applications/MAMP/tmp/mysql/mysql.sock', user='root', password='root', host='localhost', database='codearena')
         try:
-            cur = cnx.cursor(prepared=True)
+            cur = cnx.cursor()
             z = bcrypt.generate_password_hash(pwd).decode('utf - 8')
-            st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`=%s'
-            cur.execute(st, (email))
+            st = f'UPDATE `users` SET `Password`="{z}" WHERE `Email`= "{email}"'
+            cur.execute(st)
             cnx.commit()
             return True
         except ms.Error as e:
-            # print(e)
+            print(e)
             return None
         except TypeError as e:
-            # print(e)
+            print(e)
             return None
 
     def fetch_problem_statments(self, cid, pno):
