@@ -8,7 +8,7 @@ This Flask based website can be used by an individual who wishes to host a compe
 * Webpages designed to be user friendly and intuitive.
 * Excellent test coverage.
 * Will work on Python 3.6 and above.
-* Currently allows exceution of only Python programs.
+* Currently allows execution of only Python programs.
 * User's data stored using SHA256 for privacy concerns.
 * Authentication of user's email during signup.
 
