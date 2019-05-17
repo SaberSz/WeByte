@@ -14,7 +14,7 @@ This Flask based website can be used by an individual who wishes to host a compe
 
 ## Prerequisites
 * Python 3.6 or above installed on server
-* A MySQL Server like [Mamap](https://www.mamp.info/en/), [Wamp](http://www.wampserver.com/en/), [Xampp](https://www.apachefriends.org/index.html) etc.
+* A MySQL Server like [Mamp](https://www.mamp.info/en/), [Wamp](http://www.wampserver.com/en/), [Xampp](https://www.apachefriends.org/index.html) etc.
 
 ## Installing
 ```
