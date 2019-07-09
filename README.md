@@ -36,7 +36,7 @@ $ python run.py
 ```
 
 ## Built With
-* [Python](https://www.python.org/) - The programming languaged used.
+* [Python](https://www.python.org/) - The programming language used.
 * [Flask](http://flask.pocoo.org/) - Used as a Web Framework.
 * [Bootstrap](https://getbootstrap.com/) - Used for designing webpage elements.
 
